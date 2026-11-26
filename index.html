@@ -1,0 +1,2633 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sağlık Kahramanları: Besin Dünyası</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=Patrick+Hand&display=swap&subset=latin-ext" rel="stylesheet">
+    <style>
+        /* Türkçe karakterler için Angelina uyumlu eğlenceli el yazısı köprüsü */
+        @font-face {
+            font-family: 'Angelina';
+            src: local('Patrick Hand'), url('https://fonts.gstatic.com/s/patrickhand/v23/LDI1apOQONGhRVrinIS4zROFRPort2U.woff2') format('woff2');
+            unicode-range: U+011E-011F, U+0130-0131, U+015E-015F, U+00C7, U+00D6, U+00DC, U+00E7, U+00F6, U+00FC;
+            font-weight: 400 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        /* Temel karakterler için Angelina (AngelinaRegular / www.fonttr.com) */
+        @font-face {
+            font-family: 'Angelina';
+            src: local('Angelina'), local('AngelinaRegular'), local('angelina'), local('Patrick Hand'), url('https://fonts.gstatic.com/s/patrickhand/v23/LDI1apOQONGhRVrinIS4zROFRPort2U.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            font-weight: 400 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top left, #f0f9ff 0%, #e0f2fe 45%, #fefce8 100%);
+            min-height: 100vh;
+            color: #0f172a;
+        }
+        .font-display {
+            font-family: 'Fredoka', 'Angelina', 'Inter', sans-serif;
+        }
+        .font-game {
+            font-family: 'Angelina', 'Fredoka', 'Inter', sans-serif;
+            letter-spacing: 0.01em;
+        }
+        .btn-game {
+            font-family: 'Angelina', 'Fredoka', 'Inter', sans-serif;
+            letter-spacing: 0.01em;
+            transition: transform 0.14s ease, box-shadow 0.14s ease, background-color 0.18s ease, border-color 0.18s ease;
+        }
+        .btn-game:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        .btn-game:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+        /* 1. Ada Modern Laboratuvar Arka Plan Stili */
+        .ada1-modern-bg {
+            background:
+                radial-gradient(circle at 12% 18%, rgba(56, 189, 248, 0.24), transparent 42%),
+                radial-gradient(circle at 88% 22%, rgba(99, 102, 241, 0.22), transparent 45%),
+                radial-gradient(circle at 50% 92%, rgba(16, 185, 129, 0.18), transparent 48%),
+                linear-gradient(135deg, #0f172a 0%, #1e293b 52%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .ada1-modern-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+            animation: floatSlow 2.8s ease-in-out infinite;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+        }
+        .confetti {
+            position: fixed;
+            top: 0;
+            z-index: 9999;
+            pointer-events: none;
+            border-radius: 3px;
+            animation: confettiFall linear forwards;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-sky-200 selection:text-sky-900">
+
+    <!-- Üst Bilgi ve Durum Çubuğu -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2">
+            <button onclick="goHome()" class="flex items-center gap-2.5 text-left group">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-600 text-white flex items-center justify-center text-xl shadow-md group-hover:scale-105 transition">
+                    🦸‍♂️
+                </div>
+                <div>
+                    <h1 class="font-display text-base sm:text-lg font-bold text-slate-900 leading-tight">Sağlık Kahramanları</h1>
+                    <p class="text-[11px] font-semibold text-slate-500">4. Sınıf Fen Bilimleri • Besin Dünyası</p>
+                </div>
+            </button>
+
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-2xl text-xs sm:text-sm font-extrabold text-amber-900">
+                    <span>⭐ Puan:</span>
+                    <span id="header-score">0</span>
+                </div>
+                <div class="flex items-center gap-1.5 bg-sky-50 border border-sky-200 px-3 py-1.5 rounded-2xl text-xs sm:text-sm font-extrabold text-sky-900">
+                    <span>🔥 Seri:</span>
+                    <span id="header-combo">1x</span>
+                </div>
+                <div class="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-2xl text-xs sm:text-sm font-extrabold text-emerald-900">
+                    <span>🏅 Rozet:</span>
+                    <span id="header-badges">0/6</span>
+                </div>
+                <button onclick="openReportCard()" class="btn-game bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold px-3.5 py-2 rounded-2xl shadow-sm">
+                    📋 Sağlık Karnesi
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Ana Uygulama Alanı -->
+    <main id="app-container" class="max-w-6xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
+        <!-- İçerik JavaScript ile oluşturulur -->
+    </main>
+
+    <!-- Sağlık Karnesi Modalı -->
+    <div id="report-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-5 sm:p-7 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-2xl">🎓</span>
+                    <h2 class="font-display text-xl font-bold text-slate-900">Sağlık Kahramanı Karnesi</h2>
+                </div>
+                <button onclick="closeReportCard()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">✕</button>
+            </div>
+            <div id="report-modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // 1. MODÜL TANIMLARI VE VERİ HAVUZLARI
+        // =========================================================================
+        const MODULES = [
+            { id: 1, title: "1. Ada: Besin Dedektifi", subtitle: "Besin içeriklerini laboratuvarda keşfet!", icon: "🔬", badge: "Besin Dedektifi", accent: "sky" },
+            { id: 2, title: "2. Ada: Görev ve Enerji Kulesi", subtitle: "30 görevde doğru enerji kapsülünü fırlat!", icon: "🚀", badge: "Enerji Ustası", accent: "emerald" },
+            { id: 3, title: "3. Ada: Doğal mı, İşlenmiş mi?", subtitle: "Doğal gıda ile işlenmiş gıdayı ayır!", icon: "🧺", badge: "Doğal Seçici", accent: "amber" },
+            { id: 4, title: "4. Ada: Sağlıklı Tabak Atölyesi", subtitle: "Dengeli öğün için tabağa 3 doğru besin seç!", icon: "🍽️", badge: "Dengeli Şef", accent: "violet" },
+            { id: 5, title: "5. Ada: Sağlıklı Yaşam Kalkanı", subtitle: "Zararlı alışkanlıkları onar, kalkanı güçlendir!", icon: "🛡️", badge: "Sağlık Koruyucu", accent: "rose" },
+            { id: 6, title: "6. Ada: Büyük Şampiyonluk Sınavı", subtitle: "Tüm üniteyi kapsayan final macerası!", icon: "🏆", badge: "Besin Şampiyonu", accent: "indigo" }
+        ];
+
+        const ADA1_GROUPS = ["Karbonhidrat", "Protein", "Yağ", "Vitamin", "Su ve Mineraller"];
+
+        const POOL_ADA1_EASY = [
+            { name: "Tam Buğday Ekmeği", icon: "🍞", group: "Karbonhidrat" },
+            { name: "Makarna", icon: "🍝", group: "Karbonhidrat" },
+            { name: "Pirinç Pilavı", icon: "🍚", group: "Karbonhidrat" },
+            { name: "Patates", icon: "🥔", group: "Karbonhidrat" },
+            { name: "Mısır", icon: "🌽", group: "Karbonhidrat" },
+            { name: "Bulgur", icon: "🥣", group: "Karbonhidrat" },
+            { name: "Haşlanmış Yumurta", icon: "🥚", group: "Protein" },
+            { name: "Izgara Tavuk", icon: "🍗", group: "Protein" },
+            { name: "Somon Balığı", icon: "🐟", group: "Protein" },
+            { name: "Süt", icon: "🥛", group: "Protein" },
+            { name: "Beyaz Peynir", icon: "🧀", group: "Protein" },
+            { name: "Kırmızı Et", icon: "🥩", group: "Protein" },
+            { name: "Kuru Fasulye", icon: "🫘", group: "Protein" },
+            { name: "Zeytinyağı", icon: "🫒", group: "Yağ" },
+            { name: "Ceviz", icon: "🌰", group: "Yağ" },
+            { name: "Tereyağı", icon: "🧈", group: "Yağ" },
+            { name: "Fındık", icon: "🥜", group: "Yağ" },
+            { name: "Avokado", icon: "🥑", group: "Yağ" },
+            { name: "Portakal", icon: "🍊", group: "Vitamin" },
+            { name: "Elma", icon: "🍎", group: "Vitamin" },
+            { name: "Havuç", icon: "🥕", group: "Vitamin" },
+            { name: "Brokoli", icon: "🥦", group: "Vitamin" },
+            { name: "Çilek", icon: "🍓", group: "Vitamin" },
+            { name: "Domates", icon: "🍅", group: "Vitamin" },
+            { name: "Ispanak", icon: "🥬", group: "Vitamin" },
+            { name: "İçme Suyu", icon: "💧", group: "Su ve Mineraller" },
+            { name: "Doğal Maden Suyu", icon: "🫧", group: "Su ve Mineraller" },
+            { name: "Kaya Tuzu", icon: "🧂", group: "Su ve Mineraller" },
+            { name: "Karpuz (Yüksek Su)", icon: "🍉", group: "Su ve Mineraller" },
+            { name: "Salatalık (Yüksek Su)", icon: "🥒", group: "Su ve Mineraller" }
+        ];
+
+        const POOL_ADA1_HARD = [
+            ...POOL_ADA1_EASY,
+            { name: "Yulaf Ezmesi", icon: "🌾", group: "Karbonhidrat" },
+            { name: "Simit", icon: "🥨", group: "Karbonhidrat" },
+            { name: "Bal", icon: "🍯", group: "Karbonhidrat" },
+            { name: "Kestane", icon: "🌰", group: "Karbonhidrat" },
+            { name: "Nohut", icon: "🧆", group: "Protein" },
+            { name: "Yeşil Mercimek", icon: "🍲", group: "Protein" },
+            { name: "Yoğurt", icon: "🥣", group: "Protein" },
+            { name: "Badem", icon: "🥜", group: "Yağ" },
+            { name: "Susam", icon: "🥯", group: "Yağ" },
+            { name: "Ayçiçek Çekirdeği", icon: "🌻", group: "Yağ" },
+            { name: "Kivi", icon: "🥝", group: "Vitamin" },
+            { name: "Kırmızı Biber", icon: "🫑", group: "Vitamin" },
+            { name: "Limon", icon: "🍋", group: "Vitamin" },
+            { name: "Mandalina", icon: "🍊", group: "Vitamin" },
+            { name: "Kaynak Suyu", icon: "🚰", group: "Su ve Mineraller" }
+        ];
+
+        const POOL_ADA2 = [
+            {
+                icon: "🏃‍♂️",
+                needTitle: "Koşu Yarışı",
+                q: "Koşarken bize ilk enerji veren kapsül hangisi?",
+                capsules: [
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Ekmek, makarna" },
+                    { name: "Protein", icon: "🧱", sub: "Et, süt, yumurta" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Meyve, sebze" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Su, maden suyu" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🩹",
+                needTitle: "Dizimiz Sıyrıldı!",
+                q: "Yaraları iyileştiren ve büyümemizi sağlayan kapsül hangisi?",
+                capsules: [
+                    { name: "Yağ", icon: "🔋", sub: "Zeytinyağı, ceviz" },
+                    { name: "Protein", icon: "🧱", sub: "Yumurta, balık, et" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Pirinç, patates" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "İçme suyu" }
+                ],
+                correct: 1
+            },
+            {
+                icon: "🦠",
+                needTitle: "Hastalıklara Karşı Koruma",
+                q: "Bizi hastalıklardan koruyan düzenleyici kapsül hangisi?",
+                capsules: [
+                    { name: "Vitamin", icon: "🛡️", sub: "Portakal, elma, brokoli" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Simit, mısır" },
+                    { name: "Yağ", icon: "🔋", sub: "Tereyağı, fındık" },
+                    { name: "Protein", icon: "🧱", sub: "Tavuk, peynir" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🏔️",
+                needTitle: "Yedek Enerji Deposu",
+                q: "Karbonhidrat bitince ikinci sırada enerji veren kapsül hangisi?",
+                capsules: [
+                    { name: "Protein", icon: "🧱", sub: "Tavuk, peynir" },
+                    { name: "Yağ", icon: "🔋", sub: "Zeytin, ceviz, fındık" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Çilek, ıspanak" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Kaynak suyu" }
+                ],
+                correct: 1
+            },
+            {
+                icon: "🌡️",
+                needTitle: "Vücut Sıcaklığı",
+                q: "Vücut ısımızı düzenleyen yaşam sıvısı hangisi?",
+                capsules: [
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Her gün bol su" },
+                    { name: "Yağ", icon: "🔋", sub: "Ayçiçek yağı" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Makarna" },
+                    { name: "Protein", icon: "🧱", sub: "Kırmızı et" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🦷",
+                needTitle: "Sağlam Dişler ve Kemikler",
+                q: "Kemik ve dişlerimizi güçlendiren kapsül hangisi?",
+                capsules: [
+                    { name: "Su ve Mineraller", icon: "💎", sub: "Su, süt, maden suyu" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Ekmek, bulgur" },
+                    { name: "Yağ", icon: "🔋", sub: "Ceviz, zeytin" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Limon, kivi" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "⚽",
+                needTitle: "Futbol Maçı",
+                q: "Oyunda hızlı hareket etmemizi sağlayan enerji kapsülü hangisi?",
+                capsules: [
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Ekmek, pilav, makarna" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "İçme suyu" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Mandalina, elma" },
+                    { name: "Protein", icon: "🧱", sub: "Balık, yumurta" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "💪",
+                needTitle: "Güçlü Kaslar",
+                q: "Kaslarımızı güçlendiren yapıcı-onarıcı kapsül hangisi?",
+                capsules: [
+                    { name: "Yağ", icon: "🔋", sub: "Zeytin, fındık" },
+                    { name: "Protein", icon: "🧱", sub: "Tavuk, mercimek, süt" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Patates, mısır" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Havuç, domates" }
+                ],
+                correct: 1
+            },
+            {
+                icon: "❄️",
+                needTitle: "Soğuk Kış Günü",
+                q: "Soğuk havalarda vücudumuzu sıcak tutan kapsül hangisi?",
+                capsules: [
+                    { name: "Yağ", icon: "🔋", sub: "Ceviz, tereyağı, zeytinyağı" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Kaynak suyu" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Marul, salatalık" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Bulgur" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🤧",
+                needTitle: "Grip Olmamak İçin",
+                q: "Bağışıklığımızı güçlendiren C vitamini kapsülü hangisi?",
+                capsules: [
+                    { name: "Vitamin", icon: "🛡️", sub: "Portakal, kivi, limon" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Makarna, ekmek" },
+                    { name: "Yağ", icon: "🔋", sub: "Ayçiçek yağı" },
+                    { name: "Protein", icon: "🧱", sub: "Kırmızı et" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🧠",
+                needTitle: "Ders Çalışma Zamanı",
+                q: "Beynimizin çalışması için ilk enerji veren kapsül hangisi?",
+                capsules: [
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Yulaf, tam tahıl ekmeği" },
+                    { name: "Yağ", icon: "🔋", sub: "Zeytinyağı" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Salatalık" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Su" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🩸",
+                needTitle: "Kan Yapımı ve Sağlık",
+                q: "Kan yapımında görev alan düzenleyici kapsül hangisi?",
+                capsules: [
+                    { name: "Su ve Mineraller", icon: "💎", sub: "Mineralli besinler ve su" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Ekmek, pirinç" },
+                    { name: "Yağ", icon: "🔋", sub: "Tereyağı" },
+                    { name: "Protein", icon: "🧱", sub: "Peynir" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🚴‍♀️",
+                needTitle: "Bisiklet Turu",
+                q: "Pedal çevirirken hızlı enerji veren kapsül hangisi?",
+                capsules: [
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Bulgur, ekmek, patates" },
+                    { name: "Protein", icon: "🧱", sub: "Peynir, yumurta" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Ispanak, brokoli" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Su" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "📏",
+                needTitle: "Boyumuz Uzuyor!",
+                q: "Büyüme ve gelişmemizi sağlayan temel kapsül hangisi?",
+                capsules: [
+                    { name: "Protein", icon: "🧱", sub: "Süt, yumurta, balık, et" },
+                    { name: "Yağ", icon: "🔋", sub: "Susam, zeytin" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Pirinç, makarna" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Elma, armut" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "💦",
+                needTitle: "Çok Terledik!",
+                q: "Terleyince kaybettiğimiz sıvıyı geri veren kapsül hangisi?",
+                capsules: [
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Temiz su ve maden suyu" },
+                    { name: "Yağ", icon: "🔋", sub: "Tereyağı" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Simit" },
+                    { name: "Protein", icon: "🧱", sub: "Tavuk" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "👀",
+                needTitle: "Göz Sağlığımız",
+                q: "Gözlerimizi koruyan A vitamini kapsülü hangisi?",
+                capsules: [
+                    { name: "Vitamin", icon: "🛡️", sub: "Havuç, ıspanak" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Makarna" },
+                    { name: "Yağ", icon: "🔋", sub: "Ayçiçek yağı" },
+                    { name: "Protein", icon: "🧱", sub: "Kuru fasulye" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "💅",
+                needTitle: "Saç ve Tırnaklar",
+                q: "Saç ve tırnaklarımızın uzamasını sağlayan kapsül hangisi?",
+                capsules: [
+                    { name: "Protein", icon: "🧱", sub: "Yumurta, süt, et" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Patates" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Su" },
+                    { name: "Yağ", icon: "🔋", sub: "Ceviz" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🔋",
+                needTitle: "Uzun Süreli Enerji",
+                q: "Vücudumuzda depo edilerek yedek enerji veren kapsül hangisi?",
+                capsules: [
+                    { name: "Yağ", icon: "🔋", sub: "Zeytinyağı, ceviz, badem" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Çilek, portakal" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Kaynak suyu" },
+                    { name: "Protein", icon: "🧱", sub: "Yoğurt" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🏀",
+                needTitle: "Basketbol Oyunu",
+                q: "Zıplamak ve koşmak için ilk enerji veren kapsül hangisi?",
+                capsules: [
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Ekmek, makarna, bulgur" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Marul, domates" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Su" },
+                    { name: "Yağ", icon: "🔋", sub: "Tereyağı" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🦴",
+                needTitle: "Kemik Onarımı",
+                q: "Kırılan kemiklerin iyileşmesini sağlayan kapsül hangisi?",
+                capsules: [
+                    { name: "Protein", icon: "🧱", sub: "Süt, peynir, yumurta" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Mısır, patates" },
+                    { name: "Yağ", icon: "🔋", sub: "Zeytin" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Çilek" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🌿",
+                needTitle: "Düzenli Çalışan Vücut",
+                q: "Organlarımızın düzenli çalışmasını sağlayan kapsül hangisi?",
+                capsules: [
+                    { name: "Vitamin", icon: "🛡️", sub: "Taze sebze ve meyveler" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Ekmek, pirinç" },
+                    { name: "Yağ", icon: "🔋", sub: "Ceviz, fındık" },
+                    { name: "Protein", icon: "🧱", sub: "Tavuk eti" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🏕️",
+                needTitle: "İç Organları Koruma",
+                q: "İç organlarımızı darbelere karşı koruyan kapsül hangisi?",
+                capsules: [
+                    { name: "Yağ", icon: "🔋", sub: "Avokado, zeytin, badem" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "İçme suyu" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Limon, kivi" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Mısır" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🌅",
+                needTitle: "Sabah Kahvaltısı",
+                q: "Sabah uyanınca güne enerjik başlamamızı sağlayan kapsül hangisi?",
+                capsules: [
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Tam buğday ekmeği, bal" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Su" },
+                    { name: "Yağ", icon: "🔋", sub: "Ayçiçek yağı" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Salatalık" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🧬",
+                needTitle: "Yıpranan Dokular",
+                q: "Vücudumuzdaki yıpranan dokuları onaran kapsül hangisi?",
+                capsules: [
+                    { name: "Protein", icon: "🧱", sub: "Balık, yumurta, mercimek" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Makarna" },
+                    { name: "Yağ", icon: "🔋", sub: "Ayçiçek yağı" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Elma" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🚰",
+                needTitle: "Her Besinde Bulunur!",
+                q: "Tüm besinlerin içinde bulunan düzenleyici kapsül hangisi?",
+                capsules: [
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Su, karpuz, domates" },
+                    { name: "Yağ", icon: "🔋", sub: "Zeytinyağı" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Simit" },
+                    { name: "Protein", icon: "🧱", sub: "Peynir" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🧗",
+                needTitle: "Güçlü Kol ve Bacaklar",
+                q: "Kas yapımını destekleyen yapıcı-onarıcı kapsül hangisi?",
+                capsules: [
+                    { name: "Protein", icon: "🧱", sub: "Et, tavuk, nohut, yoğurt" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Pirinç pilavı" },
+                    { name: "Yağ", icon: "🔋", sub: "Fındık" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Mandalina" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🍋",
+                needTitle: "Sağlıklı Diş Etleri",
+                q: "Diş etlerimizi koruyan C vitamini kapsülü hangisi?",
+                capsules: [
+                    { name: "Vitamin", icon: "🛡️", sub: "Limon, kırmızı biber, portakal" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Pirinç pilavı" },
+                    { name: "Yağ", icon: "🔋", sub: "Fındık" },
+                    { name: "Protein", icon: "🧱", sub: "Tavuk" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🌰",
+                needTitle: "Vitaminlerin Kullanımı",
+                q: "Bazı vitaminlerin vücutta kullanılmasını sağlayan kapsül hangisi?",
+                capsules: [
+                    { name: "Yağ", icon: "🔋", sub: "Zeytinyağı, ceviz, badem" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Ekmek" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Su" },
+                    { name: "Protein", icon: "🧱", sub: "Süt" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🏊",
+                needTitle: "İp Atlama Oyunu",
+                q: "İp atlarken bize hızlı enerji veren kapsül hangisi?",
+                capsules: [
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Bulgur, patates, ekmek" },
+                    { name: "Protein", icon: "🧱", sub: "Peynir" },
+                    { name: "Vitamin", icon: "🛡️", sub: "Ispanak" },
+                    { name: "Su ve Mineraller", icon: "💧", sub: "Su" }
+                ],
+                correct: 0
+            },
+            {
+                icon: "🛡️",
+                needTitle: "Düzenleyici Besinler",
+                q: "Vücudumuzda düzenleyici olarak görev yapan kapsül hangisi?",
+                capsules: [
+                    { name: "Vitamin", icon: "🛡️", sub: "Meyve ve sebzeler" },
+                    { name: "Karbonhidrat", icon: "⚡", sub: "Ekmek ve makarna" },
+                    { name: "Yağ", icon: "🔋", sub: "Tereyağı ve zeytin" },
+                    { name: "Protein", icon: "🧱", sub: "Et ve yumurta" }
+                ],
+                correct: 0
+            }
+        ];
+
+        const POOL_ADA3 = [
+            { name: "Dalından Elma", icon: "🍎", isNatural: true, hint: "Katkı maddesi içermez, doğadan geldiği gibidir." },
+            { name: "Patates Cipsi", icon: "🥔", isNatural: false, hint: "Fabrikada işlem görmüş, fazla tuz ve katkı içerir." },
+            { name: "Köy Yumurtası", icon: "🥚", isNatural: true, hint: "Doğal protein kaynağıdır, ambalajlı işlenmiş ürün değildir." },
+            { name: "Şekerli Gazlı İçecek", icon: "🥤", isNatural: false, hint: "Yapay aroma, renklendirici ve yoğun şeker içerir." },
+            { name: "Ceviz İçi", icon: "🌰", isNatural: true, hint: "Kabuğundan çıkarılmış doğal ve sağlıklı yağ kaynağıdır." },
+            { name: "Renkli Jelibon Şekerleme", icon: "🍬", isNatural: false, hint: "Tamamen fabrikada üretilmiş işlenmiş gıdadır." },
+            { name: "Ev Yapımı Yoğurt", icon: "🥣", isNatural: true, hint: "Doğal sütten mayalanmış besindir." },
+            { name: "Hazır Kek", icon: "🧁", isNatural: false, hint: "Raf ömrünü uzatmak için koruyucu maddeler eklenmiştir." },
+            { name: "Çilek", icon: "🍓", isNatural: true, hint: "Mevsiminde yetişen doğal bir meyvedir." },
+            { name: "Çikolatalı Gofret", icon: "🍫", isNatural: false, hint: "Fabrika üretimi şekerli ve katkılı paketli üründür." },
+            { name: "Havuç", icon: "🥕", isNatural: true, hint: "Toprakta yetişen doğal sebzedir." },
+            { name: "Hazır Meyve Aromalı Toz", icon: "🧃", isNatural: false, hint: "Yapay aroma ve renklendirici içeren işlenmiş üründür." },
+            { name: "Deniz Balığı", icon: "🐟", isNatural: true, hint: "Doğal bir protein kaynağıdır." },
+            { name: "Hazır Çorba", icon: "🍜", isNatural: false, hint: "Kurutulmuş ve katkı/tuz eklenmiş işlenmiş gıdadır." },
+            { name: "Brokoli", icon: "🥦", isNatural: true, hint: "Doğal bir sebzedir." },
+            { name: "Şeker Kaplı Draje", icon: "🍭", isNatural: false, hint: "Yoğun şeker ve boya içeren işlenmiş şekerlemedir." },
+            { name: "Kabuklu Fındık", icon: "🥜", isNatural: true, hint: "Doğal yağ ve besin içeren kabuklu yemiştir." },
+            { name: "Hazır Kremalı Pasta", icon: "🍰", isNatural: false, hint: "Şeker, krema ve katkı maddeleri içeren işlenmiş tatlıdır." },
+            { name: "Portakal", icon: "🍊", isNatural: true, hint: "Doğal C vitamini kaynağı meyvedir." },
+            { name: "Mısır Cipsi", icon: "🌽", isNatural: false, hint: "Kızartılmış ve fazla tuz/katkı eklenmiş işlenmiş atıştırmalıktır." },
+            { name: "Domates", icon: "🍅", isNatural: true, hint: "Doğal bir sebzedir." },
+            { name: "Gazoz Şişesi", icon: "🫧", isNatural: false, hint: "Şekerli ve gazlı işlenmiş içecektir." },
+            { name: "Ispanak", icon: "🥬", isNatural: true, hint: "Doğal yapraklı sebzedir." },
+            { name: "Kakaolu Kurabiye", icon: "🍪", isNatural: false, hint: "Fabrikada üretilmiş paketli atıştırmalıktır." },
+            { name: "Salatalık", icon: "🥒", isNatural: true, hint: "Yüksek su içerikli doğal sebzedir." },
+            { name: "Renkli Şeker Şeridi", icon: "🍬", isNatural: false, hint: "Katkı ve şeker içeren işlenmiş üründür." },
+            { name: "Karpuz", icon: "🍉", isNatural: true, hint: "Yaz mevsiminin doğal meyvesidir." },
+            { name: "Tatlı Bar", icon: "🍫", isNatural: false, hint: "Şeker ve katkı maddeleri içeren paketli üründür." },
+            { name: "Kivi", icon: "🥝", isNatural: true, hint: "Doğal vitamin kaynağı meyvedir." },
+            { name: "Hazır Şekerli İçecek Kutusu", icon: "🥤", isNatural: false, hint: "Şeker ve aroma eklenmiş işlenmiş içecektir." }
+        ];
+
+        const POOL_ADA3_HARD = [
+            ...POOL_ADA3,
+            { name: "Ham Kestane", icon: "🌰", isNatural: true, hint: "Doğal kuruyemiş çeşididir." },
+            { name: "Soslu Kraker", icon: "🥨", isNatural: false, hint: "Baharat/sos ve katkı içeren işlenmiş üründür." },
+            { name: "Mandalina", icon: "🍊", isNatural: true, hint: "Doğal kış meyvesidir." },
+            { name: "Hazır Şekerli Krema", icon: "🧁", isNatural: false, hint: "İşlenmiş şekerli tatlı ürünüdür." },
+            { name: "Limon", icon: "🍋", isNatural: true, hint: "Doğal narenciye meyvesidir." },
+            { name: "Karışık Cips", icon: "🍟", isNatural: false, hint: "İşlenmiş ve tuzlu paketli üründür." },
+            { name: "Kırmızı Biber", icon: "🫑", isNatural: true, hint: "Doğal ve vitaminli sebzedir." },
+            { name: "Hazır Şekerli Lokum Kutusu", icon: "🍬", isNatural: false, hint: "Şeker ve aroma içeren işlenmiş üründür." },
+            { name: "Avokado", icon: "🥑", isNatural: true, hint: "Doğal ve sağlıklı yağ içeren meyvedir." },
+            { name: "Tatlı Kek Dilimi", icon: "🍰", isNatural: false, hint: "Katkılı ve şekerli paketli unlu mamuldür." },
+            { name: "Doğal Kaynak Suyu", icon: "🚰", isNatural: true, hint: "Doğal kaynaktan gelen saf içme suyudur." },
+            { name: "Hazır Aromalı Soğuk Çay", icon: "🧃", isNatural: false, hint: "Şeker ve aroma içeren işlenmiş içecektir." },
+            { name: "Kabak", icon: "🎃", isNatural: true, hint: "Doğal sebze çeşididir." },
+            { name: "Şekerli Sakız", icon: "🫧", isNatural: false, hint: "İşlenmiş şekerleme ürünüdür." },
+            { name: "Badem İçi", icon: "🥜", isNatural: true, hint: "Doğal yağ ve mineral içeren kuruyemiştir." }
+        ];
+
+        const POOL_ADA4 = [
+            {
+                title: "Okul Öncesi Süper Kahvaltı Tabağı",
+                mission: "Hem enerji veren hem büyümeni sağlayan dengeli bir kahvaltı için 3 uygun besin seç!",
+                items: [
+                    { name: "Haşlanmış Yumurta", icon: "🥚", healthy: true },
+                    { name: "Tam Buğday Ekmeği", icon: "🍞", healthy: true },
+                    { name: "Domates & Salatalık", icon: "🍅", healthy: true },
+                    { name: "Gazlı İçecek", icon: "🥤", healthy: false },
+                    { name: "Patates Cipsi", icon: "🍟", healthy: false },
+                    { name: "Renkli Şekerleme", icon: "🍬", healthy: false }
+                ]
+            },
+            {
+                title: "Antrenman Sonrası Öğle Yemeği",
+                mission: "Kaslarını onaracak ve vitamin deposu olacak 3 sağlıklı yiyeceği tabağa yerleştir!",
+                items: [
+                    { name: "Izgara Tavuk", icon: "🍗", healthy: true },
+                    { name: "Bulgur Pilavı", icon: "🍚", healthy: true },
+                    { name: "Mevsim Salatası", icon: "🥗", healthy: true },
+                    { name: "Kızartma Sosis", icon: "🌭", healthy: false },
+                    { name: "Jelibon", icon: "🍬", healthy: false },
+                    { name: "Şekerli Kola", icon: "🥤", healthy: false }
+                ]
+            },
+            {
+                title: "Kış Günü Bağışıklık Tabağı",
+                mission: "Hastalıklardan korunmak için dengeli akşam yemeği tabağına 3 sağlıklı seçim yap!",
+                items: [
+                    { name: "Fırında Balık", icon: "🐟", healthy: true },
+                    { name: "Buharda Brokoli", icon: "🥦", healthy: true },
+                    { name: "Kase Yoğurt", icon: "🥣", healthy: true },
+                    { name: "Şerbetli Hamur Tatlısı", icon: "🍩", healthy: false },
+                    { name: "Aromalı İçecek", icon: "🧃", healthy: false },
+                    { name: "Mısır Cipsi", icon: "🌽", healthy: false }
+                ]
+            },
+            {
+                title: "Okul Beslenme Çantası",
+                mission: "Teneffüste zihnini açık tutacak 3 sağlıklı atıştırmalığı çantaya koy!",
+                items: [
+                    { name: "Ceviz ve Badem", icon: "🌰", healthy: true },
+                    { name: "Taze Mandalina", icon: "🍊", healthy: true },
+                    { name: "Peynirli Tam Tahıl Sandviç", icon: "🥪", healthy: true },
+                    { name: "Cips Paketi", icon: "🥔", healthy: false },
+                    { name: "Kola", icon: "🥤", healthy: false },
+                    { name: "Paketli Gofret", icon: "🍫", healthy: false }
+                ]
+            },
+            {
+                title: "Hafta Sonu Aile Sofrası",
+                mission: "Tüm besin gruplarını dengeli içeren 3 sağlıklı seçeneği tabağa ekle!",
+                items: [
+                    { name: "Kuru Fasulye", icon: "🫘", healthy: true },
+                    { name: "Pirinç Pilavı", icon: "🍚", healthy: true },
+                    { name: "Cacık (Yoğurt & Salatalık)", icon: "🥒", healthy: true },
+                    { name: "Aşırı Tuzlu Turşu Cipsi", icon: "🧂", healthy: false },
+                    { name: "Kremalı Pasta", icon: "🍰", healthy: false },
+                    { name: "Gazoz", icon: "🫧", healthy: false }
+                ]
+            },
+            {
+                title: "Sabah Güneş Tabağı",
+                mission: "Güne dengeli başlamak için tabağa 3 sağlıklı besin koy!",
+                items: [
+                    { name: "Yulaf & Süt", icon: "🥣", healthy: true },
+                    { name: "Haşlanmış Yumurta", icon: "🥚", healthy: true },
+                    { name: "Çilek Dilimleri", icon: "🍓", healthy: true },
+                    { name: "Şekerli Gazoz", icon: "🥤", healthy: false },
+                    { name: "Paketli Kek", icon: "🧁", healthy: false },
+                    { name: "Şeker Şeridi", icon: "🍬", healthy: false }
+                ]
+            },
+            {
+                title: "Büyüme Gücü Öğünü",
+                mission: "Büyüme ve gelişmeni destekleyecek 3 sağlıklı yiyeceği seç!",
+                items: [
+                    { name: "Somon Balığı", icon: "🐟", healthy: true },
+                    { name: "Tam Buğday Ekmeği", icon: "🍞", healthy: true },
+                    { name: "Havuç & Salatalık", icon: "🥕", healthy: true },
+                    { name: "Renkli Şekerleme", icon: "🍬", healthy: false },
+                    { name: "Hazır Krema", icon: "🍰", healthy: false },
+                    { name: "Patates Cipsi", icon: "🍟", healthy: false }
+                ]
+            },
+            {
+                title: "Teneffüs Enerji Tabağı",
+                mission: "Enerjini dengeli tutacak 3 sağlıklı seçeneği tabağa yerleştir!",
+                items: [
+                    { name: "Beyaz Peynir", icon: "🧀", healthy: true },
+                    { name: "Taze Elma", icon: "🍎", healthy: true },
+                    { name: "Ceviz İçi", icon: "🌰", healthy: true },
+                    { name: "Paketli Gofret", icon: "🍫", healthy: false },
+                    { name: "Gazlı İçecek", icon: "🥤", healthy: false },
+                    { name: "Jelibon", icon: "🍬", healthy: false }
+                ]
+            },
+            {
+                title: "Akşam Koruma Tabağı",
+                mission: "Vücudunu koruyan düzenleyici ve yapıcı 3 besini seç!",
+                items: [
+                    { name: "Mercimek Yemeği", icon: "🍲", healthy: true },
+                    { name: "Yoğurt", icon: "🥣", healthy: true },
+                    { name: "Ispanak", icon: "🥬", healthy: true },
+                    { name: "Şekerli Draje", icon: "🍭", healthy: false },
+                    { name: "Kızarmış Cips", icon: "🥔", healthy: false },
+                    { name: "Aromalı İçecek", icon: "🧃", healthy: false }
+                ]
+            },
+            {
+                title: "Spor Sonrası Toparlanma",
+                mission: "Spor sonrası yenilenmen için 3 sağlıklı besin seç!",
+                items: [
+                    { name: "Izgara Köfte", icon: "🥩", healthy: true },
+                    { name: "Bulgur Pilavı", icon: "🍚", healthy: true },
+                    { name: "Mandalina", icon: "🍊", healthy: true },
+                    { name: "Kola", icon: "🥤", healthy: false },
+                    { name: "Jelibon", icon: "🍬", healthy: false },
+                    { name: "Paketli Kek", icon: "🧁", healthy: false }
+                ]
+            },
+            {
+                title: "Yeşil Yaprak Tabağı",
+                mission: "Vitamin ve mineral zengini 3 sağlıklı yiyeceği tabağa ekle!",
+                items: [
+                    { name: "Brokoli", icon: "🥦", healthy: true },
+                    { name: "Zeytinyağlı Fasulye", icon: "🫘", healthy: true },
+                    { name: "Kivi", icon: "🥝", healthy: true },
+                    { name: "Gazoz", icon: "🫧", healthy: false },
+                    { name: "Mısır Cipsi", icon: "🌽", healthy: false },
+                    { name: "Şekerli Bar", icon: "🍫", healthy: false }
+                ]
+            },
+            {
+                title: "Dengeli Öğle Molası",
+                mission: "Öğle öğününde dengeli bir tabak için 3 sağlıklı besin seç!",
+                items: [
+                    { name: "Tavuk Sote", icon: "🍗", healthy: true },
+                    { name: "Tam Tahıllı Ekmek", icon: "🍞", healthy: true },
+                    { name: "Domates", icon: "🍅", healthy: true },
+                    { name: "Aromalı Meyve Suyu", icon: "🧃", healthy: false },
+                    { name: "Şekerli Bar", icon: "🍫", healthy: false },
+                    { name: "Patates Cipsi", icon: "🍟", healthy: false }
+                ]
+            },
+            {
+                title: "Vitamin Bahçesi Tabağı",
+                mission: "Taze ve doğal 3 besini tabağa yerleştir!",
+                items: [
+                    { name: "Portakal", icon: "🍊", healthy: true },
+                    { name: "Fındık", icon: "🥜", healthy: true },
+                    { name: "Salatalık", icon: "🥒", healthy: true },
+                    { name: "Şeker Şeridi", icon: "🍬", healthy: false },
+                    { name: "Hazır Pasta", icon: "🍰", healthy: false },
+                    { name: "Gazlı İçecek", icon: "🥤", healthy: false }
+                ]
+            },
+            {
+                title: "Sağlıklı Büyüme Tabağı",
+                mission: "Gelişimini destekleyecek 3 sağlıklı seçeneği işaretle!",
+                items: [
+                    { name: "Haşlanmış Yumurta", icon: "🥚", healthy: true },
+                    { name: "Peynir", icon: "🧀", healthy: true },
+                    { name: "Çilek", icon: "🍓", healthy: true },
+                    { name: "Cips", icon: "🥔", healthy: false },
+                    { name: "Şekerleme", icon: "🍭", healthy: false },
+                    { name: "Gazoz", icon: "🫧", healthy: false }
+                ]
+            },
+            {
+                title: "Hafta İçi Akşam Menüsü",
+                mission: "Akşam yemeği için dengeli 3 sağlıklı besini seç!",
+                items: [
+                    { name: "Fırın Balık", icon: "🐟", healthy: true },
+                    { name: "Yeşil Salata", icon: "🥗", healthy: true },
+                    { name: "Yoğurt", icon: "🥣", healthy: true },
+                    { name: "Şerbetli Tatlı", icon: "🍩", healthy: false },
+                    { name: "Gazoz", icon: "🫧", healthy: false },
+                    { name: "Cips Paketi", icon: "🥔", healthy: false }
+                ]
+            },
+            {
+                title: "Güçlü Kemik Tabağı",
+                mission: "Kemik ve diş sağlığını koruyan 3 sağlıklı besin seç!",
+                items: [
+                    { name: "Süt & Yulaf", icon: "🥛", healthy: true },
+                    { name: "Beyaz Peynir", icon: "🧀", healthy: true },
+                    { name: "Brokoli", icon: "🥦", healthy: true },
+                    { name: "Şekerli Krema", icon: "🧁", healthy: false },
+                    { name: "Patates Cipsi", icon: "🍟", healthy: false },
+                    { name: "Jelibon", icon: "🍬", healthy: false }
+                ]
+            },
+            {
+                title: "Doğal Enerji Öğünü",
+                mission: "Sana uzun süreli enerji verecek 3 sağlıklı besini seç!",
+                items: [
+                    { name: "Bulgur Pilavı", icon: "🍚", healthy: true },
+                    { name: "Kuru Fasulye", icon: "🫘", healthy: true },
+                    { name: "Elma", icon: "🍎", healthy: true },
+                    { name: "Jelibon", icon: "🍬", healthy: false },
+                    { name: "Kola", icon: "🥤", healthy: false },
+                    { name: "Paketli Gofret", icon: "🍫", healthy: false }
+                ]
+            },
+            {
+                title: "Mevsim Sebze Tabağı",
+                mission: "Mevsiminde yetişen 3 sağlıklı besini tabağa koy!",
+                items: [
+                    { name: "Havuç", icon: "🥕", healthy: true },
+                    { name: "Ispanak", icon: "🥬", healthy: true },
+                    { name: "Ceviz", icon: "🌰", healthy: true },
+                    { name: "Şekerleme", icon: "🍭", healthy: false },
+                    { name: "Cips", icon: "🥔", healthy: false },
+                    { name: "Hazır Pasta", icon: "🍰", healthy: false }
+                ]
+            },
+            {
+                title: "Usta Şef Dengeli Tabağı",
+                mission: "Usta şef gibi dengeli bir öğün için 3 sağlıklı besin seç!",
+                items: [
+                    { name: "Izgara Tavuk", icon: "🍗", healthy: true },
+                    { name: "Tam Buğday Ekmeği", icon: "🍞", healthy: true },
+                    { name: "Domates & Salatalık", icon: "🍅", healthy: true },
+                    { name: "Şekerli Pasta", icon: "🍰", healthy: false },
+                    { name: "Gazlı İçecek", icon: "🥤", healthy: false },
+                    { name: "Şeker Şeridi", icon: "🍬", healthy: false }
+                ]
+            },
+            {
+                title: "Taze Enerji Kahvaltısı",
+                mission: "Güne dinç başlamak için 3 sağlıklı besini seç!",
+                items: [
+                    { name: "Haşlanmış Yumurta", icon: "🥚", healthy: true },
+                    { name: "Ceviz İçi", icon: "🌰", healthy: true },
+                    { name: "Portakal", icon: "🍊", healthy: true },
+                    { name: "Paketli Gofret", icon: "🍫", healthy: false },
+                    { name: "Gazoz", icon: "🫧", healthy: false },
+                    { name: "Patates Cipsi", icon: "🍟", healthy: false }
+                ]
+            }
+        ];
+
+        const POOL_ADA5 = [
+            {
+                icon: "🚬",
+                threat: "Sigara Dumanı Tehlikesi!",
+                q: "Sigara içilen kapalı ortamlardan uzaklaşmak sağlığımızı korur.",
+                correct: true
+            },
+            {
+                icon: "🍺",
+                threat: "Zararlı Alışkanlık Uyarısı!",
+                q: "Alkol ve sigara kullanmak organlarımıza zarar vermez, tam tersi güçlendirir.",
+                correct: false
+            },
+            {
+                icon: "🛒",
+                threat: "Son Kullanma Tarihi Kontrolü!",
+                q: "Paketli gıda alırken son kullanma tarihine ve ambalaja bakmalıyız.",
+                correct: true
+            },
+            {
+                icon: "🍞",
+                threat: "İsrafı Önleme Görevi!",
+                q: "Yiyebileceğimiz kadar yemek almak besin israfını önlemeye yardımcı olur.",
+                correct: true
+            },
+            {
+                icon: "🥗",
+                threat: "Sebze ve Meyve Hijyeni!",
+                q: "Sebze ve meyveleri yıkamadan doğrudan yemek her zaman güvenlidir.",
+                correct: false
+            },
+            {
+                icon: "💧",
+                threat: "Günlük Su Tüketimi!",
+                q: "Gün içinde yeterli miktarda temiz su içmek vücudumuzun düzenli çalışmasına yardım eder.",
+                correct: true
+            },
+            {
+                icon: "🧼",
+                threat: "Yemek Öncesi El Temizliği!",
+                q: "Yemek yemeden önce ellerimizi sabunla yıkamak mikropların bulaşmasını önler.",
+                correct: true
+            },
+            {
+                icon: "🍬",
+                threat: "Aşırı Şeker Tüketimi!",
+                q: "Her gün bol miktarda şekerli ve gazlı içecek tüketmek dişlerimize zarar verebilir.",
+                correct: true
+            },
+            {
+                icon: "🥫",
+                threat: "Bozuk Ambalaj Uyarısı!",
+                q: "Kapağı şişmiş veya ambalajı yırtılmış ürünleri tüketmek sağlık riski oluşturur.",
+                correct: true
+            },
+            {
+                icon: "🍽️",
+                threat: "Tabak İsrafı!",
+                q: "Tabağımıza bitiremeyeceğimiz kadar çok yemek koymak besin israfına yol açar.",
+                correct: true
+            },
+            {
+                icon: "🌬️",
+                threat: "Temiz Hava Kalkanı!",
+                q: "Sigara dumanının bulunduğu ortamlarda bulunmak akciğerlerimizi korur.",
+                correct: false
+            },
+            {
+                icon: "🧂",
+                threat: "Aşırı Tuz Kullanımı!",
+                q: "Yemeklere alışkanlıkla fazla tuz eklemek sağlığımız için zararlı olabilir.",
+                correct: true
+            },
+            {
+                icon: "🍎",
+                threat: "Dengeli Öğün Alışkanlığı!",
+                q: "Günlük öğünlerimizde sebze, meyve, tahıl ve protein besinlerine yer vermek dengelidir.",
+                correct: true
+            },
+            {
+                icon: "📅",
+                threat: "Tarihi Geçmiş Gıda!",
+                q: "Son kullanma tarihi geçmiş gıdaları tüketmek gıda zehirlenmesine neden olabilir.",
+                correct: true
+            },
+            {
+                icon: "🥕",
+                threat: "Taze Besin Seçimi!",
+                q: "Mevsiminde yetişen sebze ve meyveleri tercih etmek hem sağlıklı hem doğaldır.",
+                correct: true
+            },
+            {
+                icon: "🚬",
+                threat: "Pasif İçicilik Kalkanı!",
+                q: "Başkalarının içtiği sigara dumanını solumak sağlığımızı olumsuz etkiler.",
+                correct: true
+            },
+            {
+                icon: "🧊",
+                threat: "Doğru Saklama Koşulu!",
+                q: "Buzdolabında saklanması gereken süt ve yoğurdu dışarıda bekletmek bozulmasını hızlandırır.",
+                correct: true
+            },
+            {
+                icon: "🥖",
+                threat: "Ekmek Saklama Kuralı!",
+                q: "Artan taze ekmekleri uygun şekilde saklamak veya değerlendirmek israfı azaltır.",
+                correct: true
+            },
+            {
+                icon: "🥤",
+                threat: "Şekerli İçecek Alışkanlığı!",
+                q: "Su yerine sürekli şekerli gazlı içecek içmek sağlıklı bir alışkanlıktır.",
+                correct: false
+            },
+            {
+                icon: "🏃‍♂️",
+                threat: "Hareketli Yaşam Desteği!",
+                q: "Dengeli beslenmenin yanında düzenli hareket etmek ve spor yapmak sağlığımızı güçlendirir.",
+                correct: true
+            },
+            {
+                icon: "🏷️",
+                threat: "Etiket Okuma Görevi!",
+                q: "Paketli ürünlerin üzerindeki içindekiler ve tarih bilgilerini kontrol etmek bilinçli davranıştır.",
+                correct: true
+            },
+            {
+                icon: "🍓",
+                threat: "Meyve Yıkama Kuralı!",
+                q: "Çilek ve elma gibi meyveleri yemeden önce bol suyla yıkamak hijyen sağlar.",
+                correct: true
+            },
+            {
+                icon: "🍺",
+                threat: "Zararlı Maddelerden Uzak Durma!",
+                q: "Sigara ve alkol gibi zararlı alışkanlıklardan uzak durmak vücudumuzu korur.",
+                correct: true
+            },
+            {
+                icon: "🍲",
+                threat: "Artan Yemeklerin Değerlendirilmesi!",
+                q: "Evde kalan sağlıklı yemekleri çöpe atmak yerine uygun koşullarda değerlendirmek tutumluluktur.",
+                correct: true
+            },
+            {
+                icon: "🍟",
+                threat: "Aşırı Yağlı ve Tuzlu Gıdalar!",
+                q: "Kızartma ve cips gibi yiyecekleri her gün aşırı tüketmek sağlıklı beslenmeye uygundur.",
+                correct: false
+            },
+            {
+                icon: "🥛",
+                threat: "Kemik ve Diş Sağlığı!",
+                q: "Süt, yoğurt ve peynir gibi besinler kemik ve diş gelişimine katkı sağlar.",
+                correct: true
+            },
+            {
+                icon: "📦",
+                threat: "Ambalaj Kontrolü!",
+                q: "Ezilmiş, patlamış veya son kullanma tarihi silinmiş paketli ürünleri almak güvenlidir.",
+                correct: false
+            },
+            {
+                icon: "🌿",
+                threat: "Doğal ve Dengeli Seçim!",
+                q: "Öğünlerimizi tek çeşit besinle sınırlamak yerine dengeli oluşturmak sağlığımızı destekler.",
+                correct: true
+            },
+            {
+                icon: "🚰",
+                threat: "Güvenli İçme Suyu!",
+                q: "Temiz ve güvenilir su kaynaklarını kullanmak vücut sağlığımız için önemlidir.",
+                correct: true
+            },
+            {
+                icon: "🛒",
+                threat: "Planlı Alışveriş Kalkanı!",
+                q: "İhtiyaç listesi yaparak alışverişe çıkmak hem bütçeyi hem besinleri korumaya yardımcı olur.",
+                correct: true
+            }
+        ];
+
+        const POOL_CHAMPIONSHIP = [
+            { q: "Vücudumuza ilk sırada enerji veren besin içeriği hangisidir?", options: ["Karbonhidratlar", "Vitaminler", "Su ve Mineraller", "Proteinler"], correct: 0 },
+            { q: "Büyüme, gelişme ve yaraların iyileşmesinde görevli yapıcı-onarıcı besin grubu hangisidir?", options: ["Yağlar", "Proteinler", "Karbonhidratlar", "Şekerler"], correct: 1 },
+            { q: "Hastalıklara karşı direncimizi artıran düzenleyici besin grubu hangisidir?", options: ["Vitaminler", "Nişasta", "Katı Yağlar", "Tuz"], correct: 0 },
+            { q: "Karbonhidratların yetersiz kaldığı durumlarda ikinci sırada enerji veren besin içeriği hangisidir?", options: ["Su", "Yağlar", "Mineraller", "Vitaminler"], correct: 1 },
+            { q: "Aşağıdakilerden hangisi tüm besinlerin içinde bulunan düzenleyici bir maddedir?", options: ["Su", "Şeker", "Nişasta", "Yağ"], correct: 0 },
+            { q: "Paketli ürün alırken aşağıdakilerden hangisine dikkat etmeliyiz?", options: ["Son kullanma tarihine", "Reklam müziğine", "Kutu büyüklüğüne", "Fiyat etiketinin rengine"], correct: 0 },
+            { q: "Sigara içilen ortamlarda bulunmak sağlığımızı nasıl etkiler?", options: ["Pasif içici olarak akciğerlerimize zarar verir", "Bağışıklığımızı güçlendirir", "Hiçbir etkisi yoktur", "Boy uzamasını hızlandırır"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi doğal besine örnektir?", options: ["Taze sıkılmış portakal suyu", "Gazlı kola", "Paketli cips", "Renkli şekerleme"], correct: 0 },
+            { q: "Dengeli beslenme ne demektir?", options: ["Her besin grubundan vücudun ihtiyacı kadar tüketmek", "Sadece sevdiğimiz tatlıları yemek", "Sürekli tek tip beslenmek", "Hiç su içmemek"], correct: 0 },
+            { q: "Zeytin, ceviz, fındık ve ayçiçeğinde en çok hangi besin içeriği bulunur?", options: ["Yağ", "Su", "Nişasta", "Şeker"], correct: 0 },
+            { q: "Ekmek, makarna, pirinç ve patateste ağırlıklı olarak hangi besin içeriği yer alır?", options: ["Karbonhidrat", "Vitamin", "Su", "Mineral"], correct: 0 },
+            { q: "Et, tavuk, balık, yumurta ve süt hangi besin grubunun önemli kaynaklarındandır?", options: ["Protein", "Karbonhidrat", "Yağ", "Şeker"], correct: 0 },
+            { q: "Taze sebze ve meyveler bizi hangi yönden destekler?", options: ["Vitaminlerle hastalıklara karşı korur", "Sadece yağ depolar", "Su ihtiyacını yok eder", "Kemikleri zayıflatır"], correct: 0 },
+            { q: "Vücut sıcaklığımızın dengelenmesine yardımcı olan temel madde hangisidir?", options: ["Su", "Patates cipsi", "Jelibon", "Gazoz"], correct: 0 },
+            { q: "Kemik ve dişlerimizin sağlamlaşmasında görev alan besin öğeleri hangileridir?", options: ["Mineraller ve proteinler", "Şeker ve gazoz", "Cips ve gofret", "Yapay boyalar"], correct: 0 },
+            { q: "Koşarken ve oyun oynarken bize en çabuk enerji sağlayan besin grubu hangisidir?", options: ["Karbonhidratlar", "Vitaminler", "Su", "Mineraller"], correct: 0 },
+            { q: "Yıpranan dokularımızı ve kaslarımızı onaran besin grubu hangisidir?", options: ["Proteinler", "Karbonhidratlar", "Gazlı içecekler", "Şekerlemeler"], correct: 0 },
+            { q: "Soğuk havalarda vücudumuzu sıcak tutmaya ve yedek enerji sağlamaya yardım eden hangisidir?", options: ["Yağlar", "Su", "Limon", "Salatalık"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi işlenmiş gıdaya örnektir?", options: ["Paketli cips", "Dalından elma", "Köy yumurtası", "Taze havuç"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi doğal gıdaya örnektir?", options: ["Çilek", "Renkli jelibon", "Hazır kek", "Şekerli gazoz"], correct: 0 },
+            { q: "Paketli gıdalarda bulunan katkı maddeleri ve fazla şeker/tuz sağlığımızı nasıl etkiler?", options: ["Aşırı tüketimde sağlığa zarar verebilir", "Her zaman kemikleri uzatır", "Su içme ihtiyacını bitirir", "Hastalıklara bağışıklık kazandırır"], correct: 0 },
+            { q: "Ambalajı yırtılmış veya şişmiş paketli bir ürünü gördüğümüzde ne yapmalıyız?", options: ["Tüketmemeli ve büyüklerimize haber vermeliyiz", "Hemen yemeliyiz", "Kapağını açıp koklamalıyız", "Arkadaşımıza vermeliyiz"], correct: 0 },
+            { q: "Son kullanma tarihi geçmiş bir gıdayı tüketmek neye yol açabilir?", options: ["Gıda zehirlenmesine", "Hızlı boy uzamasına", "Daha iyi görmeye", "Enerji tasarrufuna"], correct: 0 },
+            { q: "Alışveriş yaparken besin israfını önlemek için nasıl davranmalıyız?", options: ["İhtiyacımız kadar ve planlı almalıyız", "Bozulacağını bilsek de çok almalıyız", "Hiç etiket okumamalıyız", "Sadece paketli ürün almalıyız"], correct: 0 },
+            { q: "Tabağımıza bitiremeyeceğimiz kadar yemek koymak neye neden olur?", options: ["Besin israfına", "Vitamin artışına", "Su tasarrufuna", "Daha sağlıklı büyümeye"], correct: 0 },
+            { q: "Evde kalan sağlıklı yemekleri değerlendirmenin en doğru yolu nedir?", options: ["Uygun koşullarda saklayıp yeniden değerlendirmek", "Doğrudan çöpe dökmek", "Dışarıda açıkta bırakmak", "Üzerine şeker dökmek"], correct: 0 },
+            { q: "Sebze ve meyveleri yemeden önce ne yapmalıyız?", options: ["Bol temiz suyla yıkamalıyız", "Kirli ellerle dokunmalıyız", "Toprağa sürtmeli", "Ambalajını yırtmalıyız"], correct: 0 },
+            { q: "Yemeklere alışkanlıkla fazla tuz eklemek sağlığımız için neden sakıncalıdır?", options: ["Fazla tuz tüketimi sağlığa zarar verebilir", "Tuz vitamini artırır", "Tuz su ihtiyacını sıfırlar", "Tuz kasları onarır"], correct: 0 },
+            { q: "Her gün bol miktarda şekerli ve asitli içecek tüketmek neye zarar verebilir?", options: ["Dişlerimize ve genel sağlığımıza", "Görme yeteneğimize", "Saç tellerimize", "Ayakkabılarımıza"], correct: 0 },
+            { q: "Sigara ve alkol gibi zararlı alışkanlıklar vücudumuza ne yapar?", options: ["Organlarımıza ve sağlığımıza zarar verir", "Büyümemizi hızlandırır", "Enerji verir", "Kemikleri güçlendirir"], correct: 0 },
+            { q: "Sigara içilen bir ortamda bulunmak neden zararlıdır?", options: ["Zararlı dumanı soluyarak sağlığımızı etkiler", "Temiz hava sağlar", "Vitamin kazandırır", "İştahı dengeler"], correct: 0 },
+            { q: "Yemeklerden önce ellerimizi sabunla yıkamak hangi alışkanlıkla ilgilidir?", options: ["Hijyen ve sağlığı koruma", "Besin israfı", "Fazla yağ tüketimi", "Hareketsizlik"], correct: 0 },
+            { q: "Bulgur, yulaf ve tam buğday ekmeği ağırlıklı olarak hangi besin içeriğini barındırır?", options: ["Karbonhidrat", "Yağ", "Su", "Mineral"], correct: 0 },
+            { q: "Kuru fasulye, nohut ve mercimek bitkisel kaynaklı hangi besin içeriği bakımından zengindir?", options: ["Protein", "Şeker", "Gaz", "Boya"], correct: 0 },
+            { q: "Ceviz, fındık, badem ve zeytinyağı hangi besin içeriğiyle öne çıkar?", options: ["Yağ", "Nişasta", "Su", "Tuz"], correct: 0 },
+            { q: "Portakal, mandalina, limon ve kivi hangi vitamin bakımından zengindir?", options: ["C vitamini", "Nişasta", "Protein", "Yağ"], correct: 0 },
+            { q: "Havuç ve ıspanak gibi besinler hangi vitamini destekleyen sağlıklı yiyeceklerdir?", options: ["A vitamini", "Şeker", "Katkı maddesi", "Gaz"], correct: 0 },
+            { q: "Terlediğimizde vücudumuzdan ne kaybederiz ve neyle tamamlamalıyız?", options: ["Su ve mineralleri su içerek tamamlamalıyız", "Cips yiyerek tamamlamalıyız", "Gazoz içerek tamamlamalıyız", "Şeker yiyerek tamamlamalıyız"], correct: 0 },
+            { q: "Dengeli bir kahvaltıda aşağıdakilerden hangilerinin yer alması uygundur?", options: ["Yumurta, tam buğday ekmeği, domates/salatalık", "Kola, cips, jelibon", "Şekerleme, gazoz, gofret", "Sadece şeker"], correct: 0 },
+            { q: "Sağlıklı yaşam için beslenmenin yanında hangi alışkanlık önemlidir?", options: ["Düzenli hareket ve yeterli uyku", "Sürekli ekran başında oturmak", "Hiç su içmemek", "Geç saatte şeker yemek"], correct: 0 },
+            { q: "İç organlarımızı darbelere karşı korumaya yardımcı olan besin içeriği hangisidir?", options: ["Yağlar", "Şekerler", "Tuzlar", "Boyalar"], correct: 0 },
+            { q: "Büyüme çağındaki çocukların boy ve kas gelişimi için hangi besin grubu şarttır?", options: ["Proteinler", "Şekerlemeler", "Gazlı içecekler", "Cipsler"], correct: 0 },
+            { q: "Sabah derslere zinde başlamak için kahvaltı yapmak neden önemlidir?", options: ["Vücuda enerji ve odaklanma sağlar", "Yorgunluğu artırır", "Su ihtiyacını yok eder", "Dişleri çürütür"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi doğal bir kuruyemiştir?", options: ["Kabuklu fındık", "Soslu mısır cipsi", "Şekerli draje", "Renkli şekerleme"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi işlenmiş bir atıştırmalıktır?", options: ["Çikolatalı gofret", "Taze elma", "Haşlanmış yumurta", "Salatalık"], correct: 0 },
+            { q: "Süt, yoğurt ve peynir hangi besin grubunda yer alır?", options: ["Proteinler", "Karbonhidratlar", "Şekerler", "Gazlı içecekler"], correct: 0 },
+            { q: "Mısır, patates ve pirinç pilavı vücudumuza hangi besin içeriğini sağlar?", options: ["Karbonhidrat", "Su", "Mineral", "Vitamin"], correct: 0 },
+            { q: "Tereyağı ve zeytinyağı hangi besin grubuna aittir?", options: ["Yağlar", "Vitaminler", "Proteinler", "Mineraller"], correct: 0 },
+            { q: "Brokoli ve domates hangi besin grubunun güzel örnekleridir?", options: ["Vitaminler", "Karbonhidratlar", "Yağlar", "Şekerler"], correct: 0 },
+            { q: "Maden suyu ve içme suyu vücudumuz için ne sağlar?", options: ["Su ve mineral desteği", "Fazla şeker", "Yapay aroma", "Katkı maddesi"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi sağlıklı bir ara öğün olabilir?", options: ["Bir avuç ceviz ve bir elma", "Büyük boy cips ve kola", "Renkli şeker torbası", "Şekerli gazoz"], correct: 0 },
+            { q: "Paketli gıdalardaki 'İçindekiler' bölümü bize ne gösterir?", options: ["Ürünün hangi maddelerden yapıldığını", "Hava durumunu", "Oyuncak hediyesini", "Mağaza saatini"], correct: 0 },
+            { q: "Buzdolabında saklanması gereken süt ve yoğurt dışarıda kalırsa ne olur?", options: ["Daha çabuk bozulur", "Daha tatlı olur", "Vitamin kazanır", "Donar"], correct: 0 },
+            { q: "Ekmek israfını önlemek için nasıl davranmalıyız?", options: ["İhtiyacımız kadar almalı, artanı değerlendirmeliyiz", "Bayatlayınca çöpe atmalıyız", "İnce dilimleyip yere dökmeliyiz", "Islatıp bırakmalıyız"], correct: 0 },
+            { q: "Spor yaparken su içmek neden önemlidir?", options: ["Vücut sıvısını ve ısısını dengeler", "Yorgunluğu artırır", "Kasları zayıflatır", "Dikkati dağıtır"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi düzenli beslenme alışkanlığıdır?", options: ["Öğünleri atlamadan dengeli beslenmek", "Sadece abur cubur yemek", "Hiç sebze yememek", "Sürekli tatlı tüketmek"], correct: 0 },
+            { q: "Zihinsel faaliyetlerimiz ve günlük hareketlerimiz için temel enerji kaynağı hangisidir?", options: ["Karbonhidratlar", "Tuzlar", "Boyalar", "Ambalajlar"], correct: 0 },
+            { q: "Kesilen veya sıyrılan cildimizin iyileşmesinde görevli besin grubu hangisidir?", options: ["Proteinler", "Gazlı içecekler", "Şekerlemeler", "Cipsler"], correct: 0 },
+            { q: "Hastalıklara karşı vücudumuzun savunmasını güçlendiren besin grubu hangisidir?", options: ["Vitaminler", "Şeker", "Tuz", "Yağ"], correct: 0 },
+            { q: "Bazı vitaminlerin vücutta emilimine yardımcı olan besin grubu hangisidir?", options: ["Yağlar", "Gazoz", "Cips", "Jelibon"], correct: 0 },
+            { q: "Atık maddelerin vücuttan uzaklaştırılmasında en önemli görev hangisine aittir?", options: ["Su", "Şekerleme", "Cips", "Gofret"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi işlenmiş gıda değildir?", options: ["Taze balık", "Paketli kek", "Gazlı içecek", "Patates cipsi"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi doğal gıda değildir?", options: ["Renkli şekerleme", "Taze portakal", "Havuç", "Köy yumurtası"], correct: 0 },
+            { q: "Etiketinde üretim ve son kullanma tarihi olmayan bir ürünü ne yapmalıyız?", options: ["Güvenli olmadığı için almamalıyız", "Mutlaka almalıyız", "Üzerine tarih yazmalıyız", "Sadece koklamalıyız"], correct: 0 },
+            { q: "Dengeli bir öğünde hangi çeşitlilik hedeflenmelidir?", options: ["Tahıl, protein, sebze/meyve ve su dengesi", "Sadece kızartma ve tatlı", "Sadece cips ve gazoz", "Sadece şeker"], correct: 0 },
+            { q: "Karpuz ve salatalık gibi besinlerde hangi madde bol miktarda bulunur?", options: ["Su", "Katkı maddesi", "Yapay boya", "Nişasta"], correct: 0 },
+            { q: "Fındık ve badem hangi besin grubuna girer?", options: ["Yağlar (ve sağlıklı yağ asitleri)", "Gazlı içecekler", "Şekerlemeler", "Vitamin tozları"], correct: 0 },
+            { q: "Tavuk, balık ve yumurta hangi besin grubunun temel örnekleridir?", options: ["Proteinler", "Karbonhidratlar", "Vitaminler", "Su"], correct: 0 },
+            { q: "Simit ve mısır hangi besin içeriğini sağlar?", options: ["Karbonhidrat", "Su", "Mineral", "Vitamin"], correct: 0 },
+            { q: "Kırmızı biber ve limon hangi vitamin açısından zengindir?", options: ["C vitamini", "Nişasta", "Protein", "Yağ"], correct: 0 },
+            { q: "Çocuklarda sağlıklı büyümenin temel şartlarından biri nedir?", options: ["Dengeli beslenme ve hareketli yaşam", "Sürekli tatlı tüketimi", "Az su içmek", "Geç uyumak"], correct: 0 },
+            { q: "Zararlı alışkanlıklardan uzak durmak sağlığımızı nasıl korur?", options: ["Akciğer, kalp ve tüm organları korur", "Enerjiyi azaltır", "Büyümeyi durdurur", "Hastalığı artırır"], correct: 0 },
+            { q: "Besinleri doğru saklamak neden önemlidir?", options: ["Bozulmayı ve israfı önler", "Daha çok şeker ekler", "Rengini değiştirir", "Ağırlaştırır"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi bilinçli tüketici davranışıdır?", options: ["Son kullanma tarihini kontrol etmek", "Fiyatına bakmadan bozuk ürün almak", "Ambalajı yırtık ürünü seçmek", "Yemeği tabakta bırakıp atmak"], correct: 0 },
+            { q: "Öğünlerimizi planlarken neye dikkat etmeliyiz?", options: ["Vücudumuzun enerji ve gelişim ihtiyacına", "Sadece en tatlı yiyeceğe", "En pahalı pakete", "En renkli ambalaja"], correct: 0 },
+            { q: "Hangi besin grubu vücudumuzda 'yapıcı ve onarıcı' olarak bilinir?", options: ["Proteinler", "Vitaminler", "Su", "Karbonhidratlar"], correct: 0 },
+            { q: "Hangi besin grubu vücudumuzda 'düzenleyici' olarak bilinir?", options: ["Vitaminler, su ve mineraller", "Şekerlemeler", "Cipsler", "Gazozlar"], correct: 0 },
+            { q: "Hangi besin grubu vücudumuza 'enerji verici' olarak bilinir?", options: ["Karbonhidratlar ve yağlar", "Su", "Tuz", "Ambalajlar"], correct: 0 },
+            { q: "Taze sıkılmış meyve suyu ile şekerli hazır meyve aromalı içecek arasındaki fark nedir?", options: ["Taze sıkılmış olan doğal ve katkısızdır", "Hazır içecek daha sağlıklıdır", "İkisi de aynı şeydir", "Taze olan gazlıdır"], correct: 0 },
+            { q: "Okul çantasına sağlıklı besin koyarken hangisi tercih edilmelidir?", options: ["Meyve, kuruyemiş veya peynirli sandviç", "Cips ve şekerleme", "Gazlı içecek ve gofret", "Jelibon paketi"], correct: 0 },
+            { q: "Yemek yerken yavaş ve iyi çiğnemek neden faydalıdır?", options: ["Sindirime ve doygunluğu hissetmeye yardım eder", "Dişleri zayıflatır", "Su ihtiyacını artırır", "Yemeği bozar"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi doğal bir sebzedir?", options: ["Ispanak", "Renkli jelibon", "Paketli cips", "Hazır kek"], correct: 0 },
+            { q: "Aşağıdakilerden hangisi işlenmiş bir gıdadır?", options: ["Hazır kraker", "Dalından portakal", "Taze domates", "Köy yumurtası"], correct: 0 },
+            { q: "Sigara dumanı bulunan ortamlarda ne yapmalıyız?", options: ["Temiz havaya çıkmalı ve uzaklaşmalıyız", "Derin derin içine çekmeliyiz", "Yakınında oturmalıyız", "Hiç umursamamalıyız"], correct: 0 },
+            { q: "Su içmeyi unuttuğumuzda vücudumuzda ne olabilir?", options: ["Yorgunluk ve baş ağrısı hissedebiliriz", "Kaslarımız uzar", "Vitamin üretimi artar", "Hiçbir şey olmaz"], correct: 0 },
+            { q: "Süt ve süt ürünlerinin kemik sağlığına katkısı nedir?", options: ["Kalsiyum ve protein desteği sağlar", "Şeker ekler", "Su azaltır", "Dişleri çürütür"], correct: 0 },
+            { q: "Kestane ve yulaf hangi besin içeriğini barındırır?", options: ["Karbonhidrat", "Su", "Mineral", "Vitamin"], correct: 0 },
+            { q: "Nohut ve yeşil mercimek hangi besin grubuna girer?", options: ["Proteinler", "Gazlı içecekler", "Şekerlemeler", "Yağlar"], correct: 0 },
+            { q: "Avokado ve susam hangi besin içeriği bakımından zengindir?", options: ["Yağ", "Su", "Şeker", "Nişasta"], correct: 0 },
+            { q: "Çilek ve elma hangi besin grubunun örnekleridir?", options: ["Vitaminler", "Karbonhidratlar", "Yağlar", "Proteinler"], correct: 0 },
+            { q: "Günlük beslenmede çeşitlilik sağlamak neden önemlidir?", options: ["Farklı besin öğelerini eksiksiz almak için", "Daha çok paket açmak için", "Daha fazla şeker yemek için", "Yemeği uzatmak için"], correct: 0 },
+            { q: "Ambalajlı ürünlerde son kullanma tarihi neden önemlidir?", options: ["Ürünün taze ve güvenli tüketilebileceği süreyi gösterir", "Rengini belirler", "Ağırlığını gösterir", "Fiyatını belirler"], correct: 0 },
+            { q: "Fazla şekerli yiyeceklerin diş sağlığına etkisi nedir?", options: ["Diş çürümelerine zemin hazırlayabilir", "Dişleri beyazlatır", "Dişleri güçlendirir", "Kalsiyum ekler"], correct: 0 },
+            { q: "Doğal besinlerle işlenmiş gıdalar arasındaki temel fark nedir?", options: ["Doğal besinler katkısız ve doğaldır; işlenmişler fabrikada işlem görür", "İşlenmiş gıdalar her zaman daha doğaldır", "Aralarında fark yoktur", "Doğal besinler paketlidir"], correct: 0 },
+            { q: "Yemeğimizi israf etmemek için porsiyonlarımızı nasıl ayarlamalıyız?", options: ["Yiyebileceğimiz miktarda almalıyız", "Çok büyük porsiyon alıp kalanı atmalıyız", "Hiç almamalıyız", "Sadece tatlı almalıyız"], correct: 0 },
+            { q: "Hastalıklardan korunmak için hangi alışkanlıklar birlikte uygulanmalıdır?", options: ["Dengeli beslenme, hijyen ve hareketli yaşam", "Sürekli cips ve şeker yemek", "Ellerini yıkamamak", "Az su içmek"], correct: 0 },
+            { q: "Zararlı alışkanlıklar hakkında doğru bilgi hangisidir?", options: ["Sigara ve alkol sağlığa zararlıdır, uzak durulmalıdır", "Sağlıklı büyüme sağlar", "Spor performansını artırır", "Vitamin kaynağıdır"], correct: 0 },
+            { q: "Tam buğday ekmeği, yoğurt ve taze meyve içeren bir öğün nasıl değerlendirilir?", options: ["Dengeli ve sağlıklı bir öğün örneğidir", "Tamamen zararlıdır", "Hiç enerji vermez", "İşlenmiş şekerdir"], correct: 0 },
+            { q: "6. Ada Şampiyonluk Sınavı'nda temel amacımız nedir?", options: ["Besinler ve sağlıklı yaşam bilgimizi pekiştirmek", "Sadece hızlı tıklamak", "Soruları atlamak", "Su içmemek"], correct: 0 }
+        ];
+
+        // =========================================================================
+        // 2. UYGULAMA DURUMU (STATE)
+        // =========================================================================
+        const gameState = {
+            currentView: 'home',
+            activeModuleId: null,
+            stepIndex: 0,
+            activeQuestions: [],
+            totalScore: 0,
+            combo: 1,
+            maxCombo: 1,
+            timedMode: false,
+            questionTimer: 15,
+            timerInterval: null,
+            ada1Difficulty: null, // 'easy' | 'hard'
+            ada1Lives: 3,
+            ada1TimeLeft: 60,
+            ada1TimerInterval: null,
+            ada1LastFeedback: null, // { chosenGroup, correctGroup, isCorrect }
+            ada1Result: null,
+            ada2TimeLeft: 60,
+            ada2TimerInterval: null,
+            ada2Result: null,
+            ada2SelectedIdx: null,
+            ada3Difficulty: null, // 'easy' | 'hard'
+            ada3Lives: 3,
+            ada3TimeLeft: 60,
+            ada3TimerInterval: null,
+            ada3Result: null,
+            ada3Feedback: null,
+            ada4Difficulty: null, // 'easy' | 'hard'
+            ada4Lives: 3,
+            ada4TimeLeft: 60,
+            ada4TimerInterval: null,
+            ada4Result: null,
+            ada4SelectedIndices: [],
+            ada4Feedback: null,
+            ada5Lives: 3,
+            ada5TimeLeft: 60,
+            ada5TimerInterval: null,
+            ada5Result: null,
+            ada5SelectedIdx: null,
+            studentName: '',
+            moduleStats: {
+                1: { completed: false, correct: 0, wrong: 0, total: 30 },
+                2: { completed: false, correct: 0, wrong: 0, total: 30 },
+                3: { completed: false, correct: 0, wrong: 0, total: 30 },
+                4: { completed: false, correct: 0, wrong: 0, total: 10 },
+                5: { completed: false, correct: 0, wrong: 0, total: 30 },
+                6: { completed: false, correct: 0, wrong: 0, total: 10 }
+            }
+        };
+
+        // =========================================================================
+        // 3. YARDIMCI FONKSİYONLAR VE ZAMANLAYICILAR
+        // =========================================================================
+        function pickRandom(arr, count) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy.slice(0, Math.min(count, copy.length));
+        }
+
+        function stopQuestionTimer() {
+            if (gameState.timerInterval) {
+                clearInterval(gameState.timerInterval);
+                gameState.timerInterval = null;
+            }
+        }
+
+        function startQuestionTimer() {
+            stopQuestionTimer();
+            if (!gameState.timedMode) return;
+            gameState.questionTimer = 15;
+            gameState.timerInterval = setInterval(() => {
+                gameState.questionTimer--;
+                const el = document.getElementById('active-question-timer');
+                if (el) el.textContent = `${gameState.questionTimer} sn`;
+                if (gameState.questionTimer <= 0) {
+                    stopQuestionTimer();
+                    const modId = gameState.activeModuleId || 6;
+                    awardPoints(false, modId);
+                    updateHeader();
+                    advanceInteractiveStep(modId);
+                }
+            }, 1000);
+        }
+
+        function stopAda1Timer() {
+            if (gameState.ada1TimerInterval) {
+                clearInterval(gameState.ada1TimerInterval);
+                gameState.ada1TimerInterval = null;
+            }
+        }
+
+        function startAda1Countdown() {
+            stopAda1Timer();
+            gameState.ada1TimeLeft = 60;
+            gameState.ada1TimerInterval = setInterval(() => {
+                gameState.ada1TimeLeft--;
+                const el = document.getElementById('ada1-timer');
+                if (el) el.textContent = `${gameState.ada1TimeLeft} sn`;
+                if (gameState.ada1TimeLeft <= 0) {
+                    stopAda1Timer();
+                    finishAda1Session();
+                }
+            }, 1000);
+        }
+
+        function finishAda1Session() {
+            stopAda1Timer();
+            gameState.ada1LastFeedback = null;
+            const st = gameState.moduleStats[1] || { correct: 0, wrong: 0, total: 30 };
+            const diff = gameState.ada1Difficulty || 'easy';
+            const correctCount = st.correct;
+            const totalItems = st.total || (diff === 'hard' ? 45 : 30);
+            const targetCorrect = diff === 'hard' ? 35 : 25;
+
+            let stars = 1;
+            if (correctCount >= targetCorrect) {
+                stars = 3;
+                st.completed = true;
+                triggerConfetti();
+            } else if (correctCount >= Math.ceil(targetCorrect * 0.6)) {
+                stars = 2;
+            }
+            updateHeader();
+
+            gameState.ada1Result = {
+                diff,
+                correctCount,
+                totalItems,
+                remainingTime: Math.max(0, gameState.ada1TimeLeft),
+                remainingLives: Math.max(0, gameState.ada1Lives),
+                stars
+            };
+            render();
+        }
+
+        function stopAda2Timer() {
+            if (gameState.ada2TimerInterval) {
+                clearInterval(gameState.ada2TimerInterval);
+                gameState.ada2TimerInterval = null;
+            }
+        }
+
+        function startAda2Countdown() {
+            stopAda2Timer();
+            gameState.ada2TimeLeft = 60;
+            gameState.ada2TimerInterval = setInterval(() => {
+                gameState.ada2TimeLeft--;
+                const el = document.getElementById('ada2-timer');
+                if (el) el.textContent = `${gameState.ada2TimeLeft} sn`;
+                if (gameState.ada2TimeLeft <= 0) {
+                    stopAda2Timer();
+                    finishAda2Session();
+                }
+            }, 1000);
+        }
+
+        function finishAda2Session() {
+            stopAda2Timer();
+            gameState.ada2SelectedIdx = null;
+            const st = gameState.moduleStats[2] || { correct: 0, wrong: 0, total: 30 };
+            const correctCount = st.correct;
+            const totalItems = st.total || gameState.activeQuestions.length || 30;
+            const targetCorrect = Math.ceil(totalItems * 0.7);
+
+            let stars = 1;
+            if (correctCount >= targetCorrect) {
+                stars = 3;
+                st.completed = true;
+                triggerConfetti();
+            } else if (correctCount >= Math.ceil(totalItems * 0.45)) {
+                stars = 2;
+            }
+            updateHeader();
+
+            gameState.ada2Result = {
+                correctCount,
+                totalItems,
+                remainingTime: Math.max(0, gameState.ada2TimeLeft),
+                stars
+            };
+            render();
+        }
+
+        function answerAda2Capsule(idx) {
+            if (gameState.ada2SelectedIdx !== null || gameState.ada2Result) return;
+            const q = gameState.activeQuestions[gameState.stepIndex];
+            if (!q) return;
+
+            const isCorrect = idx === q.correct;
+            gameState.ada2SelectedIdx = idx;
+            awardPoints(isCorrect, 2);
+            updateHeader();
+            render();
+
+            setTimeout(() => {
+                if (gameState.activeModuleId !== 2 || gameState.ada2Result) return;
+                advanceInteractiveStep(2);
+            }, isCorrect ? 420 : 750);
+        }
+
+        function stopAda3Timer() {
+            if (gameState.ada3TimerInterval) {
+                clearInterval(gameState.ada3TimerInterval);
+                gameState.ada3TimerInterval = null;
+            }
+        }
+
+        function startAda3Countdown() {
+            stopAda3Timer();
+            gameState.ada3TimeLeft = 60;
+            gameState.ada3TimerInterval = setInterval(() => {
+                gameState.ada3TimeLeft--;
+                const el = document.getElementById('ada3-timer');
+                if (el) el.textContent = `${gameState.ada3TimeLeft} sn`;
+                if (gameState.ada3TimeLeft <= 0) {
+                    stopAda3Timer();
+                    finishAda3Session();
+                }
+            }, 1000);
+        }
+
+        function finishAda3Session() {
+            stopAda3Timer();
+            gameState.ada3Feedback = null;
+            const st = gameState.moduleStats[3] || { correct: 0, wrong: 0, total: 30 };
+            const diff = gameState.ada3Difficulty || 'easy';
+            const correctCount = st.correct;
+            const totalItems = st.total || (diff === 'hard' ? 45 : 30);
+            const targetCorrect = diff === 'hard' ? 35 : 25;
+
+            let stars = 1;
+            if (correctCount >= targetCorrect) {
+                stars = 3;
+                st.completed = true;
+                triggerConfetti();
+            } else if (correctCount >= Math.ceil(targetCorrect * 0.6)) {
+                stars = 2;
+            }
+            updateHeader();
+
+            gameState.ada3Result = {
+                diff,
+                correctCount,
+                totalItems,
+                remainingTime: Math.max(0, gameState.ada3TimeLeft),
+                remainingLives: Math.max(0, gameState.ada3Lives),
+                stars
+            };
+            render();
+        }
+
+        function answerAda3Sort(chosenNatural) {
+            if (gameState.ada3Feedback || gameState.ada3Result) return;
+            const item = gameState.activeQuestions[gameState.stepIndex];
+            if (!item) return;
+
+            const isCorrect = Boolean(chosenNatural) === Boolean(item.isNatural);
+            gameState.ada3Feedback = {
+                chosenNatural: Boolean(chosenNatural),
+                isCorrect
+            };
+            awardPoints(isCorrect, 3);
+            if (!isCorrect) {
+                gameState.ada3Lives = Math.max(0, gameState.ada3Lives - 1);
+            }
+            updateHeader();
+            render();
+
+            setTimeout(() => {
+                if (gameState.activeModuleId !== 3 || gameState.ada3Result) return;
+                gameState.ada3Feedback = null;
+                if (gameState.ada3Lives <= 0) {
+                    finishAda3Session();
+                    return;
+                }
+                gameState.stepIndex++;
+                if (gameState.stepIndex >= gameState.activeQuestions.length) {
+                    finishAda3Session();
+                    return;
+                }
+                render();
+            }, isCorrect ? 380 : 750);
+        }
+
+        function stopAda4Timer() {
+            if (gameState.ada4TimerInterval) {
+                clearInterval(gameState.ada4TimerInterval);
+                gameState.ada4TimerInterval = null;
+            }
+        }
+
+        function startAda4Countdown() {
+            stopAda4Timer();
+            gameState.ada4TimeLeft = 60;
+            gameState.ada4TimerInterval = setInterval(() => {
+                gameState.ada4TimeLeft--;
+                const el = document.getElementById('ada4-timer');
+                if (el) el.textContent = `${gameState.ada4TimeLeft} sn`;
+                if (gameState.ada4TimeLeft <= 0) {
+                    stopAda4Timer();
+                    finishAda4Session();
+                }
+            }, 1000);
+        }
+
+        function finishAda4Session() {
+            stopAda4Timer();
+            gameState.ada4Feedback = null;
+            gameState.ada4SelectedIndices = [];
+            const st = gameState.moduleStats[4] || { correct: 0, wrong: 0, total: 10 };
+            const diff = gameState.ada4Difficulty || 'easy';
+            const correctCount = st.correct;
+            const totalItems = st.total || (diff === 'hard' ? 20 : 10);
+            const targetCorrect = diff === 'hard' ? 16 : 8;
+
+            let stars = 1;
+            if (correctCount >= targetCorrect) {
+                stars = 3;
+                st.completed = true;
+                triggerConfetti();
+            } else if (correctCount >= Math.ceil(targetCorrect * 0.6)) {
+                stars = 2;
+            }
+            updateHeader();
+
+            gameState.ada4Result = {
+                diff,
+                correctCount,
+                totalItems,
+                remainingTime: Math.max(0, gameState.ada4TimeLeft),
+                remainingLives: Math.max(0, gameState.ada4Lives),
+                stars
+            };
+            render();
+        }
+
+        function stopAda5Timer() {
+            if (gameState.ada5TimerInterval) {
+                clearInterval(gameState.ada5TimerInterval);
+                gameState.ada5TimerInterval = null;
+            }
+        }
+
+        function startAda5Countdown() {
+            stopAda5Timer();
+            gameState.ada5TimeLeft = 60;
+            gameState.ada5TimerInterval = setInterval(() => {
+                gameState.ada5TimeLeft--;
+                const el = document.getElementById('ada5-timer');
+                if (el) el.textContent = `${gameState.ada5TimeLeft} sn`;
+                if (gameState.ada5TimeLeft <= 0) {
+                    stopAda5Timer();
+                    finishAda5Session();
+                }
+            }, 1000);
+        }
+
+        function finishAda5Session() {
+            stopAda5Timer();
+            gameState.ada5SelectedIdx = null;
+            const st = gameState.moduleStats[5] || { correct: 0, wrong: 0, total: 30 };
+            const correctCount = st.correct;
+            const totalItems = st.total || gameState.activeQuestions.length || 30;
+            const targetCorrect = 22;
+
+            let stars = 1;
+            if (correctCount >= targetCorrect) {
+                stars = 3;
+                st.completed = true;
+                triggerConfetti();
+            } else if (correctCount >= 15) {
+                stars = 2;
+            }
+            updateHeader();
+
+            gameState.ada5Result = {
+                correctCount,
+                totalItems,
+                remainingTime: Math.max(0, gameState.ada5TimeLeft),
+                remainingLives: Math.max(0, gameState.ada5Lives),
+                stars
+            };
+            render();
+        }
+
+        function updateHeader() {
+            const scoreEl = document.getElementById('header-score');
+            const comboEl = document.getElementById('header-combo');
+            const badgesEl = document.getElementById('header-badges');
+            if (scoreEl) scoreEl.textContent = gameState.totalScore;
+            if (comboEl) comboEl.textContent = `${gameState.combo}x`;
+            if (badgesEl) {
+                const count = Object.values(gameState.moduleStats).filter(m => m.completed).length;
+                badgesEl.textContent = `${count}/6`;
+            }
+        }
+
+        function triggerConfetti() {
+            const colors = ['#38bdf8', '#10b981', '#f59e0b', '#f43f5e', '#8b5cf6'];
+            for (let i = 0; i < 26; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = `${Math.random() * 100}vw`;
+                c.style.width = `${6 + Math.random() * 8}px`;
+                c.style.height = `${10 + Math.random() * 10}px`;
+                c.style.backgroundColor = colors[i % colors.length];
+                c.style.animationDuration = `${1.5 + Math.random() * 1.4}s`;
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 3100);
+            }
+        }
+
+        function awardPoints(isCorrect, moduleId) {
+            const stat = gameState.moduleStats[moduleId];
+            if (isCorrect) {
+                if (stat) stat.correct++;
+                const earned = 100 * gameState.combo;
+                gameState.totalScore += earned;
+                gameState.combo++;
+                if (gameState.combo > gameState.maxCombo) {
+                    gameState.maxCombo = gameState.combo;
+                }
+                return earned;
+            } else {
+                if (stat) stat.wrong++;
+                gameState.combo = 1;
+                return 0;
+            }
+        }
+
+        // =========================================================================
+        // 4. NAVİGASYON VE OYUN AKIŞI
+        // =========================================================================
+        function goHome() {
+            stopQuestionTimer();
+            stopAda1Timer();
+            stopAda2Timer();
+            stopAda3Timer();
+            stopAda4Timer();
+            stopAda5Timer();
+            gameState.currentView = 'home';
+            gameState.activeModuleId = null;
+            gameState.ada1LastFeedback = null;
+            gameState.ada1Result = null;
+            gameState.ada2Result = null;
+            gameState.ada3Feedback = null;
+            gameState.ada3Result = null;
+            gameState.ada4Difficulty = null;
+            gameState.ada4Lives = 3;
+            gameState.ada4Result = null;
+            gameState.ada4SelectedIndices = [];
+            gameState.ada4Feedback = null;
+            gameState.ada5Lives = 3;
+            gameState.ada5Result = null;
+            gameState.ada5SelectedIdx = null;
+            render();
+        }
+
+        function startModule(moduleId) {
+            stopQuestionTimer();
+            stopAda1Timer();
+            stopAda2Timer();
+            stopAda3Timer();
+            stopAda4Timer();
+            stopAda5Timer();
+            gameState.currentView = moduleId === 6 ? 'championship' : 'module';
+            gameState.activeModuleId = moduleId;
+            gameState.stepIndex = 0;
+            gameState.ada1LastFeedback = null;
+            gameState.ada1Result = null;
+            gameState.ada2Result = null;
+            gameState.ada2SelectedIdx = null;
+            gameState.ada3Difficulty = null;
+            gameState.ada3Lives = 3;
+            gameState.ada3Result = null;
+            gameState.ada3Feedback = null;
+            gameState.ada4Difficulty = null;
+            gameState.ada4Lives = 3;
+            gameState.ada4Result = null;
+            gameState.ada4SelectedIndices = [];
+            gameState.ada4Feedback = null;
+            gameState.ada5Lives = 3;
+            gameState.ada5Result = null;
+            gameState.ada5SelectedIdx = null;
+
+            if (moduleId === 1) {
+                gameState.ada1Difficulty = null;
+                gameState.activeQuestions = [];
+            } else if (moduleId === 2) {
+                // Her görev için kapsül seçeneklerini karıştırarak doğru cevabın farklı sıralarda çıkmasını sağla
+                gameState.activeQuestions = pickRandom(POOL_ADA2, 30).map(item => {
+                    const correctCapsule = item.capsules[item.correct];
+                    const shuffledCapsules = pickRandom(item.capsules, item.capsules.length);
+                    const newCorrectIdx = shuffledCapsules.findIndex(c => c.name === correctCapsule.name);
+                    return {
+                        ...item,
+                        capsules: shuffledCapsules,
+                        correct: newCorrectIdx >= 0 ? newCorrectIdx : 0
+                    };
+                });
+                gameState.moduleStats[2] = { completed: gameState.moduleStats[2].completed, correct: 0, wrong: 0, total: gameState.activeQuestions.length };
+                startAda2Countdown();
+            } else if (moduleId === 3) {
+                gameState.activeQuestions = [];
+            } else if (moduleId === 4) {
+                gameState.activeQuestions = [];
+            } else if (moduleId === 5) {
+                gameState.activeQuestions = pickRandom(POOL_ADA5, 30);
+                gameState.moduleStats[5] = { completed: gameState.moduleStats[5].completed, correct: 0, wrong: 0, total: gameState.activeQuestions.length };
+                startAda5Countdown();
+            } else if (moduleId === 6) {
+                gameState.activeQuestions = pickRandom(POOL_CHAMPIONSHIP, 10).map(item => {
+                    const correctText = item.options[item.correct];
+                    const shuffledOptions = pickRandom(item.options, item.options.length);
+                    const newCorrectIdx = shuffledOptions.findIndex(opt => opt === correctText);
+                    return {
+                        ...item,
+                        options: shuffledOptions,
+                        correct: newCorrectIdx >= 0 ? newCorrectIdx : 0
+                    };
+                });
+                gameState.moduleStats[6] = { completed: gameState.moduleStats[6].completed, correct: 0, wrong: 0, total: gameState.activeQuestions.length };
+            }
+
+            if (gameState.timedMode && moduleId === 6) {
+                startQuestionTimer();
+            }
+            render();
+        }
+
+        function startAda1Mode(diff) {
+            gameState.ada1Difficulty = diff;
+            gameState.stepIndex = 0;
+            gameState.ada1Lives = 3;
+            gameState.ada1LastFeedback = null;
+            gameState.ada1Result = null;
+            const pool = diff === 'hard' ? POOL_ADA1_HARD : POOL_ADA1_EASY;
+            const count = diff === 'hard' ? 45 : 30;
+            gameState.activeQuestions = pickRandom(pool, count);
+            gameState.moduleStats[1] = {
+                completed: gameState.moduleStats[1].completed,
+                correct: 0,
+                wrong: 0,
+                total: gameState.activeQuestions.length
+            };
+            startAda1Countdown();
+            render();
+        }
+
+        function answerAda1(chosenGroup) {
+            if (gameState.ada1LastFeedback || gameState.ada1Result) return;
+            const item = gameState.activeQuestions[gameState.stepIndex];
+            if (!item) return;
+
+            const isCorrect = chosenGroup === item.group;
+            gameState.ada1LastFeedback = {
+                chosenGroup,
+                correctGroup: item.group,
+                isCorrect
+            };
+            awardPoints(isCorrect, 1);
+            if (!isCorrect) {
+                gameState.ada1Lives = Math.max(0, gameState.ada1Lives - 1);
+            }
+            updateHeader();
+            render();
+
+            setTimeout(() => {
+                if (gameState.activeModuleId !== 1 || gameState.ada1Result) return;
+                gameState.ada1LastFeedback = null;
+                if (gameState.ada1Lives <= 0) {
+                    finishAda1Session();
+                    return;
+                }
+                gameState.stepIndex++;
+                if (gameState.stepIndex >= gameState.activeQuestions.length) {
+                    finishAda1Session();
+                    return;
+                }
+                render();
+            }, isCorrect ? 380 : 750);
+        }
+
+        function advanceInteractiveStep(modId) {
+            gameState.stepIndex++;
+            gameState.ada2SelectedIdx = null;
+            gameState.ada3Feedback = null;
+            gameState.ada4SelectedIndices = [];
+            gameState.ada4Feedback = null;
+            gameState.ada5SelectedIdx = null;
+
+            if (gameState.stepIndex >= gameState.activeQuestions.length) {
+                if (modId === 2) {
+                    finishAda2Session();
+                    return;
+                }
+                stopQuestionTimer();
+                const stat = gameState.moduleStats[modId];
+                if (stat && stat.correct >= Math.ceil(stat.total * 0.6)) {
+                    stat.completed = true;
+                    triggerConfetti();
+                }
+                updateHeader();
+                goHome();
+                return;
+            }
+            render();
+        }
+
+        function startAda3Mode(diff) {
+            gameState.ada3Difficulty = diff;
+            gameState.stepIndex = 0;
+            gameState.ada3Lives = 3;
+            gameState.ada3Feedback = null;
+            gameState.ada3Result = null;
+            const pool = diff === 'hard' ? POOL_ADA3_HARD : POOL_ADA3;
+            const count = diff === 'hard' ? 45 : 30;
+            gameState.activeQuestions = pickRandom(pool, count);
+            gameState.moduleStats[3] = {
+                completed: gameState.moduleStats[3].completed,
+                correct: 0,
+                wrong: 0,
+                total: gameState.activeQuestions.length
+            };
+            startAda3Countdown();
+            render();
+        }
+
+        function startAda4Mode(diff) {
+            gameState.ada4Difficulty = diff;
+            gameState.stepIndex = 0;
+            gameState.ada4Lives = 3;
+            gameState.ada4SelectedIndices = [];
+            gameState.ada4Feedback = null;
+            gameState.ada4Result = null;
+            const count = diff === 'hard' ? 20 : 10;
+            gameState.activeQuestions = pickRandom(POOL_ADA4, count).map(meal => ({
+                ...meal,
+                items: pickRandom(meal.items.slice(0, 6), 6)
+            }));
+            gameState.moduleStats[4] = {
+                completed: gameState.moduleStats[4].completed,
+                correct: 0,
+                wrong: 0,
+                total: gameState.activeQuestions.length
+            };
+            startAda4Countdown();
+            render();
+        }
+
+        function toggleAda4Item(idx) {
+            if (gameState.ada4Feedback || gameState.ada4Result) return;
+            const pos = gameState.ada4SelectedIndices.indexOf(idx);
+            if (pos >= 0) {
+                gameState.ada4SelectedIndices.splice(pos, 1);
+            } else if (gameState.ada4SelectedIndices.length < 3) {
+                gameState.ada4SelectedIndices.push(idx);
+            }
+            render();
+        }
+
+        function submitAda4Plate() {
+            if (gameState.ada4Feedback || gameState.ada4Result || gameState.ada4SelectedIndices.length !== 3) return;
+            const q = gameState.activeQuestions[gameState.stepIndex];
+            if (!q) return;
+            const isCorrect = gameState.ada4SelectedIndices.every(i => q.items[i] && q.items[i].healthy);
+            gameState.ada4Feedback = { isCorrect };
+            awardPoints(isCorrect, 4);
+            if (!isCorrect) {
+                gameState.ada4Lives = Math.max(0, gameState.ada4Lives - 1);
+            }
+            updateHeader();
+            render();
+
+            setTimeout(() => {
+                if (gameState.activeModuleId !== 4 || gameState.ada4Result) return;
+                gameState.ada4Feedback = null;
+                gameState.ada4SelectedIndices = [];
+                if (gameState.ada4Lives <= 0) {
+                    finishAda4Session();
+                    return;
+                }
+                gameState.stepIndex++;
+                if (gameState.stepIndex >= gameState.activeQuestions.length) {
+                    finishAda4Session();
+                    return;
+                }
+                render();
+            }, isCorrect ? 550 : 850);
+        }
+
+        function answerAda5Shield(chosenBool) {
+            if (gameState.ada5SelectedIdx !== null || gameState.ada5Result) return;
+            const q = gameState.activeQuestions[gameState.stepIndex];
+            if (!q) return;
+            const isCorrect = Boolean(chosenBool) === Boolean(q.correct);
+            gameState.ada5SelectedIdx = chosenBool;
+            awardPoints(isCorrect, 5);
+            if (!isCorrect) {
+                gameState.ada5Lives = Math.max(0, gameState.ada5Lives - 1);
+            }
+            updateHeader();
+            render();
+
+            setTimeout(() => {
+                if (gameState.activeModuleId !== 5 || gameState.ada5Result) return;
+                gameState.ada5SelectedIdx = null;
+                if (gameState.ada5Lives <= 0) {
+                    finishAda5Session();
+                    return;
+                }
+                gameState.stepIndex++;
+                if (gameState.stepIndex >= gameState.activeQuestions.length) {
+                    finishAda5Session();
+                    return;
+                }
+                render();
+            }, isCorrect ? 420 : 750);
+        }
+
+        function answerChampionship(idx) {
+            if (gameState.ada5SelectedIdx !== null) return;
+            const q = gameState.activeQuestions[gameState.stepIndex];
+            if (!q) return;
+            stopQuestionTimer();
+            const isCorrect = idx === q.correct;
+            gameState.ada5SelectedIdx = idx;
+            awardPoints(isCorrect, 6);
+            updateHeader();
+            render();
+
+            setTimeout(() => {
+                if (gameState.activeModuleId !== 6) return;
+                advanceInteractiveStep(6);
+            }, 700);
+        }
+
+        function updateChampionship(idx) {
+            if (gameState.ada5SelectedIdx !== null) return;
+            const q = gameState.activeQuestions[gameState.stepIndex];
+            if (!q) return;
+            stopQuestionTimer();
+            const isCorrect = idx === q.correct;
+            gameState.ada5SelectedIdx = idx;
+            awardPoints(isCorrect, 6);
+            updateHeader();
+            render();
+
+            setTimeout(() => {
+                if (gameState.activeModuleId !== 6) return;
+                advanceInteractiveStep(6);
+            }, 700);
+        }
+
+        // =========================================================================
+        // 5. EKRAN RENDER FONKSİYONLARI
+        // =========================================================================
+        function renderModuleWrapper(mod, modId, innerHtml, extraDark = true) {
+            const shellClass = extraDark
+                ? "ada1-modern-bg text-white border-slate-700/80 shadow-2xl"
+                : "bg-white/95 border-slate-200/90 shadow-xl";
+            const backBtnClass = extraDark
+                ? "bg-white/15 hover:bg-white/25 text-white border border-white/20"
+                : "bg-slate-100 hover:bg-slate-200 text-slate-700";
+            const subTextClass = extraDark ? "text-sky-200" : "text-slate-500";
+
+            return `
+                <div class="${shellClass} font-game rounded-3xl border p-4 sm:p-7 transition-all">
+                    <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b ${extraDark ? 'border-white/15' : 'border-slate-100'} pb-4 mb-6">
+                        <div class="flex items-center gap-3">
+                            <span class="w-12 h-12 rounded-2xl ${extraDark ? 'bg-white/15 border border-white/20' : 'bg-sky-100'} flex items-center justify-center text-2xl">
+                                ${mod.icon}
+                            </span>
+                            <div>
+                                <h2 class="font-game text-lg sm:text-2xl font-bold leading-tight">${mod.title}</h2>
+                                <p class="font-game text-xs sm:text-sm font-medium ${subTextClass}">${mod.subtitle}</p>
+                            </div>
+                        </div>
+                        <button onclick="goHome()" class="btn-game ${backBtnClass} font-bold text-xs sm:text-sm px-4 py-2.5 rounded-2xl">
+                            ← Haritaya Dön
+                        </button>
+                    </div>
+                    <div class="relative z-10 font-game">
+                        ${innerHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderHome() {
+            const completedCount = Object.values(gameState.moduleStats).filter(m => m.completed).length;
+            const cardsHtml = MODULES.map(m => {
+                const st = gameState.moduleStats[m.id];
+                const isDone = st && st.completed;
+                const accentMap = {
+                    sky: "from-sky-500 to-blue-600 border-sky-200 hover:border-sky-400",
+                    emerald: "from-emerald-500 to-teal-600 border-emerald-200 hover:border-emerald-400",
+                    amber: "from-amber-400 to-orange-500 border-amber-200 hover:border-amber-400",
+                    violet: "from-violet-500 to-purple-600 border-violet-200 hover:border-violet-400",
+                    rose: "from-rose-500 to-pink-600 border-rose-200 hover:border-rose-400",
+                    indigo: "from-indigo-500 to-blue-700 border-indigo-200 hover:border-indigo-400"
+                };
+                const accentCls = accentMap[m.accent] || accentMap.sky;
+
+                return `
+                    <div onclick="startModule(${m.id})" class="btn-game cursor-pointer bg-white rounded-3xl p-5 border-2 ${isDone ? 'border-emerald-400 ring-2 ring-emerald-100' : accentCls.split(' ').slice(2).join(' ')} shadow-md hover:shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3.5">
+                                <span class="w-14 h-14 rounded-2xl bg-gradient-to-br ${accentCls.split(' ').slice(0, 2).join(' ')} text-white flex items-center justify-center text-3xl shadow-md">
+                                    ${m.icon}
+                                </span>
+                                <span class="text-xs font-extrabold px-3 py-1.5 rounded-full ${isDone ? 'bg-emerald-100 text-emerald-800' : 'bg-sky-50 text-sky-700 border border-sky-100'}">
+                                    ${isDone ? '🏅 Rozet Alındı' : '🎮 Maceraya Gir'}
+                                </span>
+                            </div>
+                            <h3 class="font-display text-lg sm:text-xl font-bold text-slate-900 mb-1">${m.title}</h3>
+                            <p class="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">${m.subtitle}</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold text-indigo-600">
+                            <span>🏅 ${m.badge}</span>
+                            <span class="bg-indigo-50 px-2.5 py-1 rounded-xl">Başla →</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('app-container').innerHTML = `
+                <section class="bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white rounded-3xl p-6 sm:p-8 shadow-xl mb-7">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-5">
+                        <div>
+                            <span class="inline-block bg-white/20 text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full mb-2">
+                                4. Sınıf Fen Bilimleri • Besinlerimiz Ünitesi
+                            </span>
+                            <h2 class="font-display text-2xl sm:text-3xl font-bold mb-2">Sağlık Kahramanları: Besin Dünyası</h2>
+                            <p class="text-sm sm:text-base text-sky-100 max-w-2xl">
+                                Besin adalarını keşfet, görevleri tamamla, puanları topla ve Sağlık Kahramanı rozetlerinin tamamını kazan!
+                            </p>
+                        </div>
+                        <div class="bg-white/15 backdrop-blur-md border border-white/25 rounded-2xl p-4 text-center shrink-0 min-w-[160px]">
+                            <div class="text-3xl font-display font-bold">${completedCount} / 6</div>
+                            <div class="text-xs font-semibold text-sky-100 mt-0.5">Toplanan Rozet</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                    ${cardsHtml}
+                </section>
+            `;
+        }
+
+        function renderAda1(mod) {
+            if (!gameState.ada1Difficulty) {
+                const html = `
+                    <div class="max-w-2xl mx-auto text-center py-4">
+                        <div class="text-5xl mb-3 animate-float">🔬</div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-2">Laboratuvar Seviyesini Seç</h3>
+                        <p class="text-sm text-sky-200 mb-6">
+                            Besinleri doğru içerik grubuna ayır! Her bölümde <strong>3 can</strong> hakkın ve <strong>60 saniye</strong> süren var.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button onclick="startAda1Mode('easy')" class="btn-game bg-white/10 hover:bg-white/20 border-2 border-sky-400/50 rounded-3xl p-6 text-left backdrop-blur-md">
+                                <div class="text-3xl mb-2">🧪</div>
+                                <h4 class="font-display text-xl font-bold text-white mb-1">Kolay Bölüm</h4>
+                                <p class="text-xs text-sky-200 mb-3">30 Besin Örneği • 3 Can Hakkı • 60 Saniye</p>
+                                <span class="inline-block bg-sky-500 text-white text-xs font-extrabold px-3 py-1 rounded-full">Başla →</span>
+                            </button>
+                            <button onclick="startAda1Mode('hard')" class="btn-game bg-white/10 hover:bg-white/20 border-2 border-indigo-400/50 rounded-3xl p-6 text-left backdrop-blur-md">
+                                <div class="text-3xl mb-2">⚗️</div>
+                                <h4 class="font-display text-xl font-bold text-white mb-1">Zor Bölüm</h4>
+                                <p class="text-xs text-indigo-200 mb-3">45 Besin Örneği • 3 Can Hakkı • 60 Saniye</p>
+                                <span class="inline-block bg-indigo-500 text-white text-xs font-extrabold px-3 py-1 rounded-full">Başla →</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 1, html, true);
+                return;
+            }
+
+            if (gameState.ada1Result) {
+                const res = gameState.ada1Result;
+                const starIcons = "⭐".repeat(res.stars) + "☆".repeat(3 - res.stars);
+                const canGoHard = res.diff === 'easy' && res.stars === 3;
+                const html = `
+                    <div class="max-w-xl mx-auto text-center py-4">
+                        <div class="text-4xl sm:text-5xl mb-3">${starIcons}</div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-1">
+                            ${res.diff === 'hard' ? 'Zor Bölüm' : 'Kolay Bölüm'} Tamamlandı!
+                        </h3>
+                        <p class="text-sm font-bold text-sky-200 mb-5">
+                            Doğru: <strong class="text-emerald-300">${res.correctCount}</strong> / ${res.totalItems} • Kalan Can: <strong class="text-rose-300">${res.remainingLives} ❤️</strong> • Kalan Süre: <strong class="text-white">${res.remainingTime} sn</strong>
+                        </p>
+                        <div class="flex flex-wrap gap-3 justify-center">
+                            ${canGoHard ? `
+                                <button onclick="startAda1Mode('hard')" class="btn-game bg-indigo-500 hover:bg-indigo-600 text-white font-extrabold py-3 px-5 rounded-2xl text-sm shadow-lg">
+                                    🚀 Zor Bölüme Geç
+                                </button>
+                            ` : ''}
+                            <button onclick="startAda1Mode('${res.diff}')" class="btn-game bg-sky-500 hover:bg-sky-600 text-white font-extrabold py-3 px-5 rounded-2xl text-sm">
+                                Tekrar Oyna
+                            </button>
+                            <button onclick="goHome()" class="btn-game bg-white/15 hover:bg-white/25 text-white font-bold py-3 px-5 rounded-2xl text-sm">
+                                Haritaya Dön
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 1, html, true);
+                return;
+            }
+
+            const item = gameState.activeQuestions[gameState.stepIndex];
+            if (!item) { finishAda1Session(); return; }
+            const fb = gameState.ada1LastFeedback;
+            const st = gameState.moduleStats[1] || { correct: 0, wrong: 0 };
+            const hearts = "❤️".repeat(gameState.ada1Lives) + "🖤".repeat(Math.max(0, 3 - gameState.ada1Lives));
+
+            const buttonsHtml = ADA1_GROUPS.map(grp => {
+                let btnClass = "bg-white/12 hover:bg-white/22 border-white/25 text-white";
+                if (fb) {
+                    if (grp === fb.correctGroup) {
+                        btnClass = "bg-emerald-500 border-emerald-300 text-white ring-4 ring-emerald-400/40";
+                    } else if (grp === fb.chosenGroup && !fb.isCorrect) {
+                        btnClass = "bg-rose-600 border-rose-300 text-white ring-4 ring-rose-400/40";
+                    } else {
+                        btnClass = "bg-white/5 border-white/10 text-white/40";
+                    }
+                }
+                return `
+                    <button ${fb ? 'disabled' : ''} onclick="answerAda1('${grp}')" class="btn-game border-2 rounded-2xl py-3.5 px-4 font-display font-bold text-sm sm:text-base transition ${btnClass}">
+                        ${grp}
+                    </button>
+                `;
+            }).join('');
+
+            const html = `
+                <div class="max-w-2xl mx-auto">
+                    <div class="flex flex-wrap items-center justify-between gap-2 bg-white/10 border border-white/15 rounded-2xl px-4 py-2.5 mb-5 text-xs sm:text-sm font-extrabold">
+                        <span>🧪 Örnek ${gameState.stepIndex + 1} / ${gameState.activeQuestions.length}</span>
+                        <span>${hearts}</span>
+                        <span class="text-emerald-300">✓ Doğru: ${st.correct}</span>
+                        <span class="bg-sky-500/80 text-white px-3 py-1 rounded-full">⏱️ <span id="ada1-timer">${gameState.ada1TimeLeft} sn</span></span>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-7 text-center mb-6 shadow-xl">
+                        <div class="text-6xl mb-3 animate-float">${item.icon}</div>
+                        <h3 class="font-display text-2xl sm:text-3xl font-bold text-white">${item.name}</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        ${buttonsHtml}
+                    </div>
+                </div>
+            `;
+            document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 1, html, true);
+        }
+
+        function renderAda2Game(mod) {
+            if (gameState.ada2Result) {
+                const res = gameState.ada2Result;
+                const starIcons = "⭐".repeat(res.stars) + "☆".repeat(3 - res.stars);
+                const html = `
+                    <div class="max-w-xl mx-auto text-center py-4">
+                        <div class="text-4xl sm:text-5xl mb-3">${starIcons}</div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-1">Görev ve Enerji Kulesi Sonucu</h3>
+                        <p class="text-sm font-bold text-sky-200 mb-4">
+                            Tamamlanan Doğru Görev: <strong class="text-emerald-300">${res.correctCount}</strong> / ${res.totalItems} • Kalan Süre: <strong class="text-white">${res.remainingTime} sn</strong>
+                        </p>
+                        <div class="bg-white/10 border border-white/20 rounded-2xl p-4 mb-5 text-xs sm:text-sm font-bold text-emerald-200">
+                            ${res.stars === 3
+                                ? 'Süper! Enerji Kulesi görevlerini başarıyla tamamladın ve rozeti kazandın!'
+                                : '1 dakikalık sürede daha fazla enerji kapsülü eşleştirerek 3 yıldıza ulaşabilirsin!'}
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                            <button onclick="startModule(2)" class="btn-game bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-3 px-5 rounded-2xl text-sm">
+                                Tekrar Oyna
+                            </button>
+                            <button onclick="goHome()" class="btn-game bg-white/15 hover:bg-white/25 text-white font-bold py-3 px-5 rounded-2xl text-sm">
+                                Haritaya Dön
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 2, html, true);
+                return;
+            }
+
+            const q = gameState.activeQuestions[gameState.stepIndex];
+            if (!q) { finishAda2Session(); return; }
+            const sel = gameState.ada2SelectedIdx;
+            const st = gameState.moduleStats[2] || { correct: 0, wrong: 0 };
+
+            const capsulesHtml = q.capsules.map((cap, idx) => {
+                let styleClass = "bg-white/12 hover:bg-white/22 border-white/25 text-white";
+                if (sel !== null) {
+                    if (idx === q.correct) {
+                        styleClass = "bg-emerald-500 border-emerald-300 text-white ring-4 ring-emerald-400/40";
+                    } else if (idx === sel) {
+                        styleClass = "bg-rose-600 border-rose-300 text-white ring-4 ring-rose-400/40";
+                    } else {
+                        styleClass = "bg-white/5 border-white/10 text-white/40";
+                    }
+                }
+                return `
+                    <button ${sel !== null ? 'disabled' : ''} onclick="answerAda2Capsule(${idx})" class="btn-game border-2 rounded-3xl p-4 text-left flex items-center gap-3.5 transition ${styleClass}">
+                        <span class="w-12 h-12 rounded-2xl bg-white/15 text-2xl flex items-center justify-center shrink-0">${cap.icon}</span>
+                        <div>
+                            <div class="font-display font-bold text-base sm:text-lg leading-tight">${cap.name}</div>
+                            <div class="text-xs font-semibold opacity-80 mt-0.5">${cap.sub}</div>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+
+            const html = `
+                <div class="max-w-3xl mx-auto">
+                    <div class="flex flex-wrap items-center justify-between gap-2 bg-white/10 border border-white/15 rounded-2xl px-4 py-2.5 mb-5 text-xs sm:text-sm font-extrabold text-white">
+                        <span>🚀 Görev ${gameState.stepIndex + 1} / ${gameState.activeQuestions.length}</span>
+                        <span class="text-emerald-300">✓ Doğru: ${st.correct}</span>
+                        <span class="bg-emerald-500/85 text-white font-black px-3 py-1 rounded-full">⏱️ <span id="ada2-timer">${gameState.ada2TimeLeft} sn</span></span>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-3xl p-6 text-center mb-6 shadow-xl">
+                        <div class="text-5xl mb-2 animate-float">${q.icon}</div>
+                        <div class="text-xs font-black uppercase tracking-wider text-emerald-300 mb-1">${q.needTitle}</div>
+                        <h3 class="font-display text-lg sm:text-xl font-bold">${q.q}</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        ${capsulesHtml}
+                    </div>
+                </div>
+            `;
+            document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 2, html, true);
+        }
+
+        function renderAda3Game(mod) {
+            if (!gameState.ada3Difficulty) {
+                const html = `
+                    <div class="max-w-2xl mx-auto text-center py-4">
+                        <div class="text-5xl mb-3 animate-float">🧺</div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-2">Ayırma Bölümü Seviyesini Seç</h3>
+                        <p class="text-sm text-sky-200 mb-6">
+                            Besinleri doğal veya işlenmiş olarak ayır! Her bölümde <strong>3 can</strong> hakkın ve <strong>60 saniye</strong> süren var.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button onclick="startAda3Mode('easy')" class="btn-game bg-white/10 hover:bg-white/20 border-2 border-amber-400/50 rounded-3xl p-6 text-left backdrop-blur-md">
+                                <div class="text-3xl mb-2">🌿</div>
+                                <h4 class="font-display text-xl font-bold text-white mb-1">Kolay Bölüm</h4>
+                                <p class="text-xs text-sky-200 font-semibold mb-3">30 Besin Örneği • 3 Can Hakkı • 60 Saniye</p>
+                                <span class="inline-block bg-amber-500 text-white text-xs font-extrabold px-3 py-1 rounded-full">Başla →</span>
+                            </button>
+                            <button onclick="startAda3Mode('hard')" class="btn-game bg-white/10 hover:bg-white/20 border-2 border-orange-400/50 rounded-3xl p-6 text-left backdrop-blur-md">
+                                <div class="text-3xl mb-2">📦</div>
+                                <h4 class="font-display text-xl font-bold text-white mb-1">Zor Bölüm</h4>
+                                <p class="text-xs text-orange-200 font-semibold mb-3">45 Besin Örneği • 3 Can Hakkı • 60 Saniye</p>
+                                <span class="inline-block bg-orange-500 text-white text-xs font-extrabold px-3 py-1 rounded-full">Başla →</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 3, html, true);
+                return;
+            }
+
+            if (gameState.ada3Result) {
+                const res = gameState.ada3Result;
+                const starIcons = "⭐".repeat(res.stars) + "☆".repeat(3 - res.stars);
+                const canGoHard = res.diff === 'easy' && res.stars === 3;
+                const html = `
+                    <div class="max-w-xl mx-auto text-center py-4">
+                        <div class="text-4xl sm:text-5xl mb-3">${starIcons}</div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-1">
+                            ${res.diff === 'hard' ? 'Zor Bölüm' : 'Kolay Bölüm'} Tamamlandı!
+                        </h3>
+                        <p class="text-sm font-bold text-sky-200 mb-5">
+                            Doğru: <strong class="text-emerald-300">${res.correctCount}</strong> / ${res.totalItems} • Kalan Can: <strong class="text-rose-300">${res.remainingLives} ❤️</strong> • Kalan Süre: <strong class="text-white">${res.remainingTime} sn</strong>
+                        </p>
+                        <div class="flex flex-wrap gap-3 justify-center">
+                            ${canGoHard ? `
+                                <button onclick="startAda3Mode('hard')" class="btn-game bg-orange-500 hover:bg-orange-600 text-white font-extrabold py-3 px-5 rounded-2xl text-sm shadow-lg">
+                                    🚀 Zor Bölüme Geç
+                                </button>
+                            ` : ''}
+                            <button onclick="startAda3Mode('${res.diff}')" class="btn-game bg-amber-500 hover:bg-amber-600 text-white font-extrabold py-3 px-5 rounded-2xl text-sm">
+                                Tekrar Oyna
+                            </button>
+                            <button onclick="goHome()" class="btn-game bg-white/15 hover:bg-white/25 text-white font-bold py-3 px-5 rounded-2xl text-sm">
+                                Haritaya Dön
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 3, html, true);
+                return;
+            }
+
+            const item = gameState.activeQuestions[gameState.stepIndex];
+            if (!item) { finishAda3Session(); return; }
+            const fb = gameState.ada3Feedback;
+            const hearts = "❤️".repeat(gameState.ada3Lives) + "🖤".repeat(Math.max(0, 3 - gameState.ada3Lives));
+
+            const html = `
+                <div class="max-w-2xl mx-auto text-center">
+                    <div class="flex flex-wrap justify-between items-center gap-2 bg-white/10 border border-white/15 rounded-2xl px-4 py-2.5 mb-5 text-xs sm:text-sm font-extrabold text-white">
+                        <span>🧺 Ürün ${gameState.stepIndex + 1} / ${gameState.activeQuestions.length}</span>
+                        <span>${hearts}</span>
+                        <span class="text-emerald-300">✓ Doğru: ${gameState.moduleStats[3].correct}</span>
+                        <span class="bg-amber-500/85 text-white px-3 py-1 rounded-full">⏱️ <span id="ada3-timer">${gameState.ada3TimeLeft} sn</span></span>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-7 mb-6 shadow-xl">
+                        <div class="text-6xl mb-3 animate-float">${item.icon}</div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-1">${item.name}</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button ${fb ? 'disabled' : ''} onclick="answerAda3Sort(true)" class="btn-game border-2 rounded-3xl p-5 font-display text-lg font-bold ${fb ? (item.isNatural ? 'bg-emerald-500 border-emerald-300 text-white' : (fb.chosenNatural === true ? 'bg-rose-600 border-rose-300 text-white' : 'bg-white/5 border-white/10 text-white/40')) : 'bg-white/12 hover:bg-emerald-500/30 border-emerald-400/50 text-white'}">
+                            🌿 Doğal Gıda
+                        </button>
+                        <button ${fb ? 'disabled' : ''} onclick="answerAda3Sort(false)" class="btn-game border-2 rounded-3xl p-5 font-display text-lg font-bold ${fb ? (!item.isNatural ? 'bg-emerald-500 border-emerald-300 text-white' : (fb.chosenNatural === false ? 'bg-rose-600 border-rose-300 text-white' : 'bg-white/5 border-white/10 text-white/40')) : 'bg-white/12 hover:bg-amber-500/30 border-amber-400/50 text-white'}">
+                            🏭 İşlenmiş Gıda
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 3, html, true);
+        }
+
+        function renderAda4Game(mod) {
+            if (!gameState.ada4Difficulty) {
+                const html = `
+                    <div class="max-w-2xl mx-auto text-center py-4">
+                        <div class="text-5xl mb-3 animate-float">🍽️</div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-2">Tabak Atölyesi Bölümünü Seç</h3>
+                        <p class="text-sm text-sky-200 mb-6">
+                            Her öğünde 3 sağlıklı yiyecek seç! Her bölümde <strong>3 can</strong> hakkın ve <strong>60 saniye</strong> süren var.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button onclick="startAda4Mode('easy')" class="btn-game bg-white/10 hover:bg-white/20 border-2 border-violet-400/50 rounded-3xl p-6 text-left backdrop-blur-md">
+                                <div class="text-3xl mb-2">🥗</div>
+                                <h4 class="font-display text-xl font-bold text-white mb-1">Kolay Bölüm</h4>
+                                <p class="text-xs text-sky-200 font-semibold mb-3">10 Öğün • 3 Can Hakkı • 60 Saniye</p>
+                                <span class="inline-block bg-violet-500 text-white text-xs font-extrabold px-3 py-1 rounded-full">Başla →</span>
+                            </button>
+                            <button onclick="startAda4Mode('hard')" class="btn-game bg-white/10 hover:bg-white/20 border-2 border-purple-400/50 rounded-3xl p-6 text-left backdrop-blur-md">
+                                <div class="text-3xl mb-2">👨‍🍳</div>
+                                <h4 class="font-display text-xl font-bold text-white mb-1">Zor Bölüm</h4>
+                                <p class="text-xs text-purple-200 font-semibold mb-3">20 Öğün • 3 Can Hakkı • 60 Saniye</p>
+                                <span class="inline-block bg-purple-500 text-white text-xs font-extrabold px-3 py-1 rounded-full">Başla →</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 4, html, true);
+                return;
+            }
+
+            if (gameState.ada4Result) {
+                const res = gameState.ada4Result;
+                const starIcons = "⭐".repeat(res.stars) + "☆".repeat(3 - res.stars);
+                const canGoHard = res.diff === 'easy' && res.stars === 3;
+                const html = `
+                    <div class="max-w-xl mx-auto text-center py-4">
+                        <div class="text-4xl sm:text-5xl mb-3">${starIcons}</div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-1">
+                            ${res.diff === 'hard' ? 'Zor Bölüm' : 'Kolay Bölüm'} Tamamlandı!
+                        </h3>
+                        <p class="text-sm font-bold text-sky-200 mb-5">
+                            Doğru: <strong class="text-emerald-300">${res.correctCount}</strong> / ${res.totalItems} • Kalan Can: <strong class="text-rose-300">${res.remainingLives} ❤️</strong> • Kalan Süre: <strong class="text-white">${res.remainingTime} sn</strong>
+                        </p>
+                        <div class="flex flex-wrap gap-3 justify-center">
+                            ${canGoHard ? `
+                                <button onclick="startAda4Mode('hard')" class="btn-game bg-purple-500 hover:bg-purple-600 text-white font-extrabold py-3 px-5 rounded-2xl text-sm shadow-lg">
+                                    🚀 Zor Bölüme Geç
+                                </button>
+                            ` : ''}
+                            <button onclick="startAda4Mode('${res.diff}')" class="btn-game bg-violet-500 hover:bg-violet-600 text-white font-extrabold py-3 px-5 rounded-2xl text-sm">
+                                Tekrar Oyna
+                            </button>
+                            <button onclick="goHome()" class="btn-game bg-white/15 hover:bg-white/25 text-white font-bold py-3 px-5 rounded-2xl text-sm">
+                                Haritaya Dön
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 4, html, true);
+                return;
+            }
+
+            const q = gameState.activeQuestions[gameState.stepIndex];
+            if (!q) { finishAda4Session(); return; }
+            const sel = gameState.ada4SelectedIndices;
+            const fb = gameState.ada4Feedback;
+            const hearts = "❤️".repeat(gameState.ada4Lives) + "🖤".repeat(Math.max(0, 3 - gameState.ada4Lives));
+
+            const itemsHtml = q.items.map((it, idx) => {
+                const isChosen = sel.includes(idx);
+                let cls = isChosen
+                    ? "bg-violet-500 border-violet-300 text-white ring-4 ring-violet-400/40"
+                    : "bg-white/12 hover:bg-white/22 border-white/25 text-white";
+                if (fb) {
+                    if (it.healthy) {
+                        cls = "bg-emerald-500 border-emerald-300 text-white";
+                    } else if (isChosen) {
+                        cls = "bg-rose-600 border-rose-300 text-white";
+                    } else {
+                        cls = "bg-white/5 border-white/10 text-white/40";
+                    }
+                }
+                return `
+                    <button ${fb ? 'disabled' : ''} onclick="toggleAda4Item(${idx})" class="btn-game border-2 rounded-2xl p-3.5 text-center transition ${cls}">
+                        <div class="text-3xl mb-1">${it.icon}</div>
+                        <div class="text-xs sm:text-sm font-bold">${it.name}</div>
+                    </button>
+                `;
+            }).join('');
+
+            const html = `
+                <div class="max-w-3xl mx-auto">
+                    <div class="flex flex-wrap justify-between items-center gap-2 bg-white/10 border border-white/15 rounded-2xl px-4 py-2.5 mb-5 text-xs sm:text-sm font-extrabold text-white">
+                        <span>🍽️ Öğün ${gameState.stepIndex + 1} / ${gameState.activeQuestions.length}</span>
+                        <span>${hearts}</span>
+                        <span>Seçilen: ${sel.length} / 3</span>
+                        <span class="bg-violet-500/85 text-white px-3 py-1 rounded-full">⏱️ <span id="ada4-timer">${gameState.ada4TimeLeft} sn</span></span>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-3xl p-5 text-center mb-5 shadow-xl">
+                        <h3 class="font-display text-xl font-bold mb-1">${q.title}</h3>
+                        <p class="text-xs sm:text-sm text-sky-200">${q.mission}</p>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
+                        ${itemsHtml}
+                    </div>
+                    <div class="text-center">
+                        <button ${sel.length !== 3 || fb ? 'disabled' : ''} onclick="submitAda4Plate()" class="btn-game disabled:opacity-40 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold px-7 py-3 rounded-2xl text-sm shadow-md">
+                            Tabağı Onayla ✓
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 4, html, true);
+        }
+
+        function renderAda5Game(mod) {
+            if (gameState.ada5Result) {
+                const res = gameState.ada5Result;
+                const starIcons = "⭐".repeat(res.stars) + "☆".repeat(3 - res.stars);
+                const html = `
+                    <div class="max-w-xl mx-auto text-center py-4">
+                        <div class="text-4xl sm:text-5xl mb-3">${starIcons}</div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-1">Sağlıklı Yaşam Kalkanı Tamamlandı!</h3>
+                        <p class="text-sm font-bold text-sky-200 mb-5">
+                            Doğru: <strong class="text-emerald-300">${res.correctCount}</strong> / ${res.totalItems} • Kalan Can: <strong class="text-rose-300">${res.remainingLives} ❤️</strong> • Kalan Süre: <strong class="text-white">${res.remainingTime} sn</strong>
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                            <button onclick="startModule(5)" class="btn-game bg-rose-500 hover:bg-rose-600 text-white font-extrabold py-3 px-5 rounded-2xl text-sm">
+                                Tekrar Oyna
+                            </button>
+                            <button onclick="goHome()" class="btn-game bg-white/15 hover:bg-white/25 text-white font-bold py-3 px-5 rounded-2xl text-sm">
+                                Haritaya Dön
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 5, html, true);
+                return;
+            }
+
+            const q = gameState.activeQuestions[gameState.stepIndex];
+            if (!q) { finishAda5Session(); return; }
+            const sel = gameState.ada5SelectedIdx;
+            const hearts = "❤️".repeat(gameState.ada5Lives) + "🖤".repeat(Math.max(0, 3 - gameState.ada5Lives));
+
+            const trueCls = sel === null
+                ? "bg-white/12 hover:bg-emerald-500/30 border-emerald-400/50 text-white"
+                : (q.correct === true
+                    ? "bg-emerald-500 border-emerald-300 text-white ring-4 ring-emerald-400/40"
+                    : (sel === true ? "bg-rose-600 border-rose-300 text-white" : "bg-white/5 border-white/10 text-white/40"));
+
+            const falseCls = sel === null
+                ? "bg-white/12 hover:bg-rose-500/30 border-rose-400/50 text-white"
+                : (q.correct === false
+                    ? "bg-emerald-500 border-emerald-300 text-white ring-4 ring-emerald-400/40"
+                    : (sel === false ? "bg-rose-600 border-rose-300 text-white" : "bg-white/5 border-white/10 text-white/40"));
+
+            const html = `
+                <div class="max-w-2xl mx-auto">
+                    <div class="flex flex-wrap justify-between items-center gap-2 bg-white/10 border border-white/15 rounded-2xl px-4 py-2.5 mb-4 text-xs sm:text-sm font-extrabold text-white">
+                        <span>🛡️ Yönerge ${gameState.stepIndex + 1} / ${gameState.activeQuestions.length}</span>
+                        <span>${hearts}</span>
+                        <span class="text-emerald-300">✓ Doğru: ${gameState.moduleStats[5].correct}</span>
+                        <span class="bg-rose-500/85 text-white px-3 py-1 rounded-full">⏱️ <span id="ada5-timer">${gameState.ada5TimeLeft} sn</span></span>
+                    </div>
+                    <div class="bg-white/10 border border-white/15 rounded-2xl px-4 py-2.5 mb-5 text-xs sm:text-sm font-bold text-sky-200 text-center">
+                        📌 Yönerge: İfadeyi oku ve <strong>Doğru</strong> mu, <strong>Yanlış</strong> mı olduğunu seç!
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-3xl p-6 text-center mb-5 shadow-xl">
+                        <div class="text-5xl mb-2 animate-float">${q.icon}</div>
+                        <div class="text-xs font-black uppercase tracking-wider text-rose-300 mb-1">${q.threat}</div>
+                        <h3 class="font-display text-lg sm:text-xl font-bold">${q.q}</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button ${sel !== null ? 'disabled' : ''} onclick="answerAda5Shield(true)" class="btn-game border-2 rounded-2xl p-4 font-display text-lg font-bold text-center transition ${trueCls}">
+                            ✓ Doğru
+                        </button>
+                        <button ${sel !== null ? 'disabled' : ''} onclick="answerAda5Shield(false)" class="btn-game border-2 rounded-2xl p-4 font-display text-lg font-bold text-center transition ${falseCls}">
+                            ✕ Yanlış
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 5, html, true);
+        }
+
+        function renderChampionship(mod) {
+            const q = gameState.activeQuestions[gameState.stepIndex];
+            if (!q) return;
+            const sel = gameState.ada5SelectedIdx;
+
+            const optsHtml = q.options.map((opt, idx) => {
+                let cls = "bg-white/12 hover:bg-white/22 border-white/25 text-white";
+                if (sel !== null) {
+                    if (idx === q.correct) cls = "bg-emerald-500 border-emerald-300 text-white";
+                    else if (idx === sel) cls = "bg-rose-600 border-rose-300 text-white";
+                    else cls = "bg-white/5 border-white/10 text-white/40";
+                }
+                return `
+                    <button ${sel !== null ? 'disabled' : ''} onclick="answerChampionship(${idx})" class="btn-game text-left border-2 rounded-2xl p-4 font-bold text-sm transition ${cls}">
+                        ${opt}
+                    </button>
+                `;
+            }).join('');
+
+            const html = `
+                <div class="max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center bg-white/10 border border-white/15 rounded-2xl px-4 py-2.5 mb-5 text-xs sm:text-sm font-extrabold text-white">
+                        <span>🏆 Final Sorusu ${gameState.stepIndex + 1} / ${gameState.activeQuestions.length}</span>
+                        <span class="text-emerald-300">✓ Doğru: ${gameState.moduleStats[6].correct}</span>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-3xl p-6 text-center mb-5 shadow-xl">
+                        <h3 class="font-display text-lg sm:text-xl font-bold">${q.q}</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        ${optsHtml}
+                    </div>
+                </div>
+            `;
+            document.getElementById('app-container').innerHTML = renderModuleWrapper(mod, 6, html, true);
+        }
+
+        function render() {
+            updateHeader();
+            if (gameState.currentView === 'home') {
+                renderHome();
+                return;
+            }
+            const mod = MODULES.find(m => m.id === gameState.activeModuleId) || MODULES[0];
+            if (gameState.activeModuleId === 1) renderAda1(mod);
+            else if (gameState.activeModuleId === 2) renderAda2Game(mod);
+            else if (gameState.activeModuleId === 3) renderAda3Game(mod);
+            else if (gameState.activeModuleId === 4) renderAda4Game(mod);
+            else if (gameState.activeModuleId === 5) renderAda5Game(mod);
+            else if (gameState.activeModuleId === 6) renderChampionship(mod);
+        }
+
+        // =========================================================================
+        // 6. SAĞLIK KARNESİ MODALI
+        // =========================================================================
+        function openReportCard() {
+            const modal = document.getElementById('report-modal');
+            const body = document.getElementById('report-modal-body');
+            if (!modal || !body) return;
+
+            const rows = MODULES.map(m => {
+                const st = gameState.moduleStats[m.id] || { completed: false, correct: 0, wrong: 0 };
+                return `
+                    <div class="flex items-center justify-between bg-slate-50 border border-slate-200/80 rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm">
+                        <span class="font-bold text-slate-800">${m.icon} ${m.title}</span>
+                        <span class="font-extrabold ${st.completed ? 'text-emerald-700' : 'text-slate-500'}">
+                            ${st.completed ? '🏅 Rozet Kazanıldı' : `Doğru: ${st.correct}`}
+                        </span>
+                    </div>
+                `;
+            }).join('');
+
+            body.innerHTML = `
+                <div class="grid grid-cols-3 gap-2.5 text-center mb-4">
+                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3">
+                        <div class="font-display text-xl font-bold text-amber-900">${gameState.totalScore}</div>
+                        <div class="text-[11px] font-bold text-amber-700">Toplam Puan</div>
+                    </div>
+                    <div class="bg-sky-50 border border-sky-200 rounded-2xl p-3">
+                        <div class="font-display text-xl font-bold text-sky-900">${gameState.maxCombo}x</div>
+                        <div class="text-[11px] font-bold text-sky-700">En Yüksek Seri</div>
+                    </div>
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3">
+                        <div class="font-display text-xl font-bold text-emerald-900">${Object.values(gameState.moduleStats).filter(m => m.completed).length}/6</div>
+                        <div class="text-[11px] font-bold text-emerald-700">Ada Rozeti</div>
+                    </div>
+                </div>
+                <div class="space-y-2 mb-5">${rows}</div>
+                <div class="flex justify-end gap-2">
+                    <button onclick="resetEntireGame()" class="btn-game bg-rose-100 hover:bg-rose-200 text-rose-800 font-bold text-xs px-4 py-2.5 rounded-xl">
+                        İlerlemeyi Sıfırla
+                    </button>
+                    <button onclick="closeReportCard()" class="btn-game bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs px-5 py-2.5 rounded-xl">
+                        Kapat
+                    </button>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+        }
+
+        function closeReportCard() {
+            const modal = document.getElementById('report-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function resetEntireGame() {
+            stopQuestionTimer();
+            stopAda1Timer();
+            stopAda2Timer();
+            stopAda3Timer();
+            stopAda4Timer();
+            stopAda5Timer();
+            gameState.currentView = 'home';
+            gameState.activeModuleId = null;
+            gameState.stepIndex = 0;
+            gameState.activeQuestions = [];
+            gameState.totalScore = 0;
+            gameState.combo = 1;
+            gameState.maxCombo = 1;
+            gameState.ada1Difficulty = null;
+            gameState.ada1Lives = 3;
+            gameState.ada1TimeLeft = 60;
+            gameState.ada1LastFeedback = null;
+            gameState.ada1Result = null;
+            gameState.ada2TimeLeft = 60;
+            gameState.ada2Result = null;
+            gameState.ada3Difficulty = null;
+            gameState.ada3Lives = 3;
+            gameState.ada3TimeLeft = 60;
+            gameState.ada3Feedback = null;
+            gameState.ada3Result = null;
+            gameState.ada4Difficulty = null;
+            gameState.ada4Lives = 3;
+            gameState.ada4TimeLeft = 60;
+            gameState.ada4Result = null;
+            gameState.ada4SelectedIndices = [];
+            gameState.ada4Feedback = null;
+            gameState.ada5Lives = 3;
+            gameState.ada5TimeLeft = 60;
+            gameState.ada5Result = null;
+            gameState.ada5SelectedIdx = null;
+            gameState.moduleStats = {
+                1: { completed: false, correct: 0, wrong: 0, total: 30 },
+                2: { completed: false, correct: 0, wrong: 0, total: 30 },
+                3: { completed: false, correct: 0, wrong: 0, total: 30 },
+                4: { completed: false, correct: 0, wrong: 0, total: 10 },
+                5: { completed: false, correct: 0, wrong: 0, total: 30 },
+                6: { completed: false, correct: 0, wrong: 0, total: 10 }
+            };
+            closeReportCard();
+            render();
+        }
+
+        window.onload = function () {
+            render();
+        };
+    </script>
+</body>
+</html>
